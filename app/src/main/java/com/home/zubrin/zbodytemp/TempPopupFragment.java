@@ -1,6 +1,7 @@
 package com.home.zubrin.zbodytemp;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -23,7 +24,15 @@ import com.home.zubrin.zbodytemp.Utils.NumericUtils;
  */
 public class TempPopupFragment extends android.support.v4.app.DialogFragment {
 
+    public static final String DIALOG_TIME_TAG = "zBodyTemp.tag.dialog_time_tag";
+    public static final String DIALOG_DATE_TAG = "zBodyTemp.tag.dialog_date_tag";
+
+    public static final int DIALOG_TIME_REQUEST_CODE = 0;
+    public static final int DIALOG_DATE_REQUEST_CODE = 1;
+
     private EditText mTempEditText;
+    private Button mTimeButton;
+    private Button mDateButton;
     private Button mOkButton;
     private Button mCancelButton;
 
@@ -43,6 +52,22 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
         getDialog().setTitle(R.string.temp_popup_title);
 
         mTempEditText = (EditText)v.findViewById(R.id.temp_popup_tempEditText);
+        mTimeButton = (Button)v.findViewById(R.id.temp_popup_time_button);
+        mTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public
+            void onClick(View v) {
+                onTimeButtonPressed();
+            }
+        });
+        mDateButton = (Button)v.findViewById(R.id.temp_popup_date_button);
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public
+            void onClick(View v) {
+                onDateButtonPressed();
+            }
+        });
         mOkButton = (Button)v.findViewById(R.id.temp_popup_ok_button);
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +84,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
                 onCancelButtonPressed();
             }
         });
+
         return v;
     }
 
@@ -104,6 +130,22 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
             getDialog().hide();
             mListener.onTemperatureCanceled();
         }
+    }
+
+    private
+    void onTimeButtonPressed() {
+        android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
+        TimePopupFragment f = new TimePopupFragment();
+        f.setTargetFragment(this, DIALOG_TIME_REQUEST_CODE);
+        f.show(fm, DIALOG_TIME_TAG);
+    }
+
+    private
+    void onDateButtonPressed() {
+        android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
+        DatePopupFragment f = new DatePopupFragment();
+        f.setTargetFragment(this, DIALOG_DATE_REQUEST_CODE);
+        f.show(fm, DIALOG_DATE_TAG);
     }
 
     // Private
