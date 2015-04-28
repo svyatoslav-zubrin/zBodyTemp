@@ -18,13 +18,17 @@
         </activity>
         <activity
             android:name=".PersonInfoActivity"
-            android:label="@string/activity_person_info_title"
-            android:parentActivityName=".PersonsActivity" >
+            android:label="@string/activity_person_info_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.home.zubrin.zbodytemp.PersonsActivity" />
         </activity>
         <activity
             android:name=".CardActivity"
-            android:label="@string/activity_card_title"
-            android:parentActivityName=".PersonsActivity" >
+            android:label="@string/activity_card_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.home.zubrin.zbodytemp.PersonsActivity" />
         </activity>
     </application>
 
