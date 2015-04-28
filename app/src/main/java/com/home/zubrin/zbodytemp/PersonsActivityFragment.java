@@ -1,6 +1,7 @@
 package com.home.zubrin.zbodytemp;
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.home.zubrin.zbodytemp.Model.Person;
 import com.home.zubrin.zbodytemp.Model.Persons;
@@ -36,10 +39,56 @@ class PersonsActivityFragment extends android.support.v4.app.ListFragment {
 
         mPersons = Persons.sharedInstance.getPersons();
 
-        ArrayAdapter<Person> adapter =
-                new ArrayAdapter<Person>(getActivity(),
-                        android.R.layout.simple_list_item_activated_1,
-                        mPersons);
+        PersonAdapter adapter = new PersonAdapter(mPersons);
         setListAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((PersonAdapter)getListAdapter()).notifyDataSetChanged();
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        Person p = ((PersonAdapter)getListAdapter()).getItem(position);
+
+        // Show card of the selected person
+        Intent i = new Intent(getActivity(), CardActivity.class);
+        startActivity(i);
+    }
+
+    // Custom list adapter
+
+    private
+    class PersonAdapter extends ArrayAdapter<Person> {
+
+        public
+        PersonAdapter(ArrayList<Person> persons) {
+            super(getActivity(), 0, persons);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getActivity()
+                        .getLayoutInflater()
+                        .inflate(R.layout.activity_persons_row, null);
+            }
+
+            Person p = getItem(position);
+
+            TextView titleTextView =
+                    (TextView)convertView.findViewById(R.id.crime_list_item_header);
+            titleTextView.setText(p.getName());
+
+            TextView dateTextView =
+                    (TextView)convertView.findViewById(R.id.crime_list_item_subheader);
+            dateTextView.setText(p.getAge().toString() + " years old");
+
+            return convertView;
+        }
     }
 }

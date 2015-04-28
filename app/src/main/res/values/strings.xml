@@ -5,4 +5,24 @@
 
     <!--Persons screen-->
     <string name="persons_title">Persons</string>
+    <string name="activity_persons_menu_add">Add person</string>
+
+    <!--Person info screen-->
+    <string name="activity_person_info_title">Person info</string>
+    <string name="activity_person_info_menu_save">Save person</string>
+    <string name="activity_person_info_hint_name">Name</string>
+    <string name="activity_person_info_hint_age">Age</string>
+
+    <!--Card screen-->
+    <string name="activity_card_title">History</string>
+    <string name="activity_card_list_title">List</string>
+    <string name="activity_card_graph_title">Graph</string>
+    <string name="activity_card_note_title">Notes</string>
+    <string name="activity_card_menu_add">New record</string>
+
+    <!--Record type popup-->
+    <string name="record_type_temperature_title">Temperature</string>
+    <string name="record_type_medicine_title">Medicine</string>
+    <string name="record_type_note_title">Note</string>
+
 </resources>

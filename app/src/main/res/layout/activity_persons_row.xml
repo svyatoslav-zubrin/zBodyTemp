@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Header"
+        android:id="@+id/crime_list_item_header"
+        android:textStyle="bold"
+        android:layout_marginLeft="3pt"
+        android:layout_marginTop="2pt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Subheader"
+        android:id="@+id/crime_list_item_subheader"
+        android:textStyle="italic"
+        android:layout_marginBottom="2pt"
+        android:layout_marginLeft="6pt" />
+
+</LinearLayout>

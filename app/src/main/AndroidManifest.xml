@@ -16,6 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PersonInfoActivity"
+            android:label="@string/activity_person_info_title"
+            android:parentActivityName=".PersonsActivity" >
+        </activity>
+        <activity
+            android:name=".CardActivity"
+            android:label="@string/activity_card_title"
+            android:parentActivityName=".PersonsActivity" >
+        </activity>
     </application>
 
 </manifest>

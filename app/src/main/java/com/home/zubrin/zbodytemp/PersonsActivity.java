@@ -1,9 +1,11 @@
 package com.home.zubrin.zbodytemp;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -47,8 +49,9 @@ class PersonsActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatementq
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.activity_persons_menu_add) {
+            Intent i = new Intent(this, PersonInfoActivity.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);
