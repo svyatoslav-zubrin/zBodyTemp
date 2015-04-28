@@ -21,8 +21,16 @@
     <string name="activity_card_menu_add">New record</string>
 
     <!--Record type popup-->
+    <string name="record_type_popup_title">Select record type</string>
     <string name="record_type_temperature_title">Temperature</string>
     <string name="record_type_medicine_title">Medicine</string>
     <string name="record_type_note_title">Note</string>
 
+    <!--Temperature selection popup-->
+    <string name="temp_popup_title">Enter temperature</string>
+    <string name="temp_popup_ok_button">OK</string>
+    <string name="temp_popup_cancel_button">Cancel</string>
+
+    <!--Messages-->
+    <string name="validation_failed_message">Check entered data and try again, please</string>
 </resources>

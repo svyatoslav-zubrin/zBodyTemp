@@ -1,88 +1,39 @@
 package com.home.zubrin.zbodytemp;
 
 import android.app.Activity;
-import android.app.DialogFragment;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.home.zubrin.zbodytemp.Model.Record;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RecordTypePopupFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RecordTypePopupFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class RecordTypePopupFragment extends DialogFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class RecordTypePopupFragment extends android.support.v4.app.DialogFragment {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // UI
+    private Button mTemperatureButton;
+    private Button mMedicineButton;
+    private Button mNoteButton;
+    // logic
+    private Record.Type mSelectedType;
 
-    private OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecordTypePopupFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RecordTypePopupFragment newInstance(String param1, String param2) {
-        RecordTypePopupFragment fragment = new RecordTypePopupFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public interface OnRecordTypeSelectedListener {
+        public void onRecordTypeSelected(Record.Type type);
     }
+    OnRecordTypeSelectedListener mListener;
 
     public RecordTypePopupFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_record_type_popup, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnRecordTypeSelectedListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new ClassCastException(activity.toString() + " must implement OnRecordTypeSelectedListener");
         }
     }
 
@@ -92,19 +43,47 @@ public class RecordTypePopupFragment extends DialogFragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_record_type_popup, container, false);
+
+        getDialog().setTitle(R.string.record_type_popup_title);
+
+        mTemperatureButton = (Button)v.findViewById(R.id.record_type_popup_temperatureButton);
+        mTemperatureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSelectedType = Record.Type.TEMPERATURE;
+                finishSelection();
+            }
+        });
+        mMedicineButton = (Button)v.findViewById(R.id.record_type_popup_medicineButton);
+        mMedicineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSelectedType = Record.Type.MEDICINE;
+                finishSelection();
+            }
+        });
+        mNoteButton = (Button)v.findViewById(R.id.record_type_popup_noteButton);
+        mNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSelectedType = Record.Type.NOTE;
+                finishSelection();
+            }
+        });
+
+        return v;
     }
 
+    // Private
+
+    private
+    void finishSelection() {
+        getDialog().hide();
+        mListener.onRecordTypeSelected(mSelectedType);
+    }
 }

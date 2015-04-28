@@ -2,6 +2,7 @@ package com.home.zubrin.zbodytemp;
 
 import java.util.Locale;
 
+import android.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -17,10 +18,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.home.zubrin.zbodytemp.Model.Record;
 
-public class CardActivity extends ActionBarActivity implements ActionBar.TabListener {
-
+public
+class CardActivity
+    extends
+        ActionBarActivity
+    implements
+        ActionBar.TabListener
+        , RecordTypePopupFragment.OnRecordTypeSelectedListener
+        , TempPopupFragment.OnTemperatureSelectionListener
+{
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -36,7 +46,8 @@ public class CardActivity extends ActionBarActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
-    public static final String DIALOG_DATE_TAG = "criminalIntent.crimeFragment.tag.dialog_date_tag";
+    public static final String DIALOG_RECORD_TYPE_TAG = "zBodyTemp.tag.dialog_record_type_tag";
+    public static final String DIALOG_TEMP_TAG = "zBodyTemp.tag.dialog_temperature_tag";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,12 +107,7 @@ public class CardActivity extends ActionBarActivity implements ActionBar.TabList
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.activity_card_menu_add) {
-
-            // TODO: correct dialog presentation
-            android.app.FragmentManager fm = getFragmentManager();
-            RecordTypePopupFragment f = new RecordTypePopupFragment();
-            f.show(fm, DIALOG_DATE_TAG);
-
+            showRecordTypeSelectionDialog();
             return true;
         }
 
@@ -121,6 +127,48 @@ public class CardActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    // Dialog callbacks
+
+    @Override
+    public void onRecordTypeSelected(Record.Type type) {
+        switch (type) {
+            case TEMPERATURE:
+                showTemperatureSelectionDialog();
+                return;
+            case MEDICINE:
+            case NOTE:
+            default:
+                Toast.makeText(this, "This record type is still in development", Toast.LENGTH_LONG).show();
+                return;
+        }
+    }
+
+    @Override
+    public void onTemperatureSelected(Float temperature) {
+        Record r = new Record(temperature);
+    }
+
+    @Override
+    public void onTemperatureCanceled() {
+
+    }
+
+    // Dialogs management
+
+    private
+    void showRecordTypeSelectionDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        RecordTypePopupFragment f = new RecordTypePopupFragment();
+        f.show(fm, DIALOG_RECORD_TYPE_TAG);
+    }
+
+    private
+    void showTemperatureSelectionDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        TempPopupFragment f = new TempPopupFragment();
+        f.show(fm, DIALOG_TEMP_TAG);
     }
 
     /**
@@ -193,5 +241,4 @@ public class CardActivity extends ActionBarActivity implements ActionBar.TabList
             return rootView;
         }
     }
-
 }

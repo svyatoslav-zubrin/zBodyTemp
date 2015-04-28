@@ -29,4 +29,14 @@ public class NumericUtils {
         }
         return true;
     }
+
+    public static
+    boolean isDouble(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

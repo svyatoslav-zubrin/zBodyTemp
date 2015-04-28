@@ -10,18 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/record_type_temperature_title"
+        android:id="@+id/record_type_popup_temperatureButton"
         />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/record_type_medicine_title"
+        android:id="@+id/record_type_popup_medicineButton"
         />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/record_type_note_title"
+        android:id="@+id/record_type_popup_noteButton"
         />
 
 </LinearLayout>

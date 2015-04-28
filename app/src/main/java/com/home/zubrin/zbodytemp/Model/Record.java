@@ -8,9 +8,19 @@ import java.util.UUID;
  */
 public class Record
 {
+    public static Float MinTemp = 34.0f;
+    public static Float MaxTemp = 42.0f;
+
     private UUID mId;
     private Float mValue;
     private Date mDate;
+    private Type mType;
+
+    public enum Type {
+        TEMPERATURE,
+        MEDICINE,
+        NOTE
+    }
 
     // Constructors
 
@@ -18,17 +28,20 @@ public class Record
         mId = UUID.randomUUID();
         mDate = new Date();
         mValue = 36.6f; // temperature, C
+        mType = Type.TEMPERATURE;
     }
 
     public Record(Float value) {
         mId = UUID.randomUUID();
         mDate = new Date();
+        mType = Type.TEMPERATURE;
 
         mValue = value;
     }
 
     public Record(Float value, Date date) {
         mId = UUID.randomUUID();
+        mType = Type.TEMPERATURE;
 
         mValue = value;
         mDate = date;
