@@ -1,5 +1,7 @@
 package com.home.zubrin.zbodytemp;
 
+import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +16,16 @@ class PersonsActivity extends ActionBarActivity {
     void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_persons);
+
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        PersonsActivityFragment fragment = (PersonsActivityFragment)fm.findFragmentById(R.id.persons_fragment);
+
+        if (fragment == null) {
+            fragment = new PersonsActivityFragment();
+            fm.beginTransaction()
+                    .add(R.id.persons_fragment, fragment)
+                    .commit();
+        }
     }
 
     // Menu management

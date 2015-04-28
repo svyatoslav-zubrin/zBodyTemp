@@ -5,7 +5,8 @@ import java.util.UUID;
 /**
  * Created by zubrin on 4/25/15.
  */
-public class Person {
+public
+class Person {
 
     private UUID mId;
     private String mName;
@@ -14,7 +15,8 @@ public class Person {
 
     // Constructors
 
-    public Person(String name, Integer age) {
+    public
+    Person(String name, Integer age) {
         mId = UUID.randomUUID();
         mCard = new Card();
 
@@ -22,27 +24,36 @@ public class Person {
         mAge = age;
     }
 
-    // Public setters and getters
-
-    public UUID getId() {
-        return mId;
-    }
-
-    public String getName() {
+    @Override
+    public
+    String toString() {
         return mName;
     }
 
-    public void setName(String name) {
+    // Public setters and getters
+
+    public
+    UUID getId() {
+        return mId;
+    }
+
+    public
+    String getName() {
+        return mName;
+    }
+
+    public
+    void setName(String name) {
         mName = name;
     }
 
-    public Integer getAge() {
+    public
+    Integer getAge() {
         return mAge;
     }
 
-    public void setAge(Integer age) {
+    public
+    void setAge(Integer age) {
         mAge = age;
     }
-
-
 }

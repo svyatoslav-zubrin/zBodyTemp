@@ -2,4 +2,7 @@
     <string name="app_name">zBodyTemp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!--Persons screen-->
+    <string name="persons_title">Persons</string>
 </resources>
