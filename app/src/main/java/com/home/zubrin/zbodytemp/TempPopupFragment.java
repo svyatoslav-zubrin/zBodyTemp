@@ -2,6 +2,7 @@ package com.home.zubrin.zbodytemp;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -14,6 +15,12 @@ import android.widget.Toast;
 
 import com.home.zubrin.zbodytemp.Model.Record;
 import com.home.zubrin.zbodytemp.Utils.NumericUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 
 /**
@@ -30,6 +37,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
     public static final int DIALOG_TIME_REQUEST_CODE = 0;
     public static final int DIALOG_DATE_REQUEST_CODE = 1;
 
+    // UI
     private EditText mTempEditText;
     private Button mTimeButton;
     private Button mDateButton;
@@ -37,6 +45,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
     private Button mCancelButton;
 
     private OnTemperatureSelectionListener mListener;
+    private Date mDate = new Date();
 
     public TempPopupFragment() {
         // Required empty public constructor
@@ -52,14 +61,15 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
         getDialog().setTitle(R.string.temp_popup_title);
 
         mTempEditText = (EditText)v.findViewById(R.id.temp_popup_tempEditText);
+
         mTimeButton = (Button)v.findViewById(R.id.temp_popup_time_button);
         mTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public
-            void onClick(View v) {
+            public void onClick(View v) {
                 onTimeButtonPressed();
             }
         });
+
         mDateButton = (Button)v.findViewById(R.id.temp_popup_date_button);
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +78,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
                 onDateButtonPressed();
             }
         });
+
         mOkButton = (Button)v.findViewById(R.id.temp_popup_ok_button);
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +87,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
                 onOkButtonPressed();
             }
         });
+
         mCancelButton = (Button)v.findViewById(R.id.temp_popup_cancel_button);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +96,8 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
                 onCancelButtonPressed();
             }
         });
+
+        updateButtonTitles();
 
         return v;
     }
@@ -105,6 +119,20 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
     void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) return;
+
+        if (requestCode == DIALOG_DATE_REQUEST_CODE) {
+            mDate = (Date)data.getSerializableExtra(DatePopupFragment.EXTRA_DATE);
+            updateButtonTitles();
+        }
+        else if (requestCode == DIALOG_TIME_REQUEST_CODE) {
+            mDate = (Date)data.getSerializableExtra(TimePopupFragment.EXTRA_DATE);
+            updateButtonTitles();
+        }
     }
 
     // User actions handlers
@@ -135,7 +163,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
     private
     void onTimeButtonPressed() {
         android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
-        TimePopupFragment f = new TimePopupFragment();
+        TimePopupFragment f = TimePopupFragment.newInstance(mDate);
         f.setTargetFragment(this, DIALOG_TIME_REQUEST_CODE);
         f.show(fm, DIALOG_TIME_TAG);
     }
@@ -143,7 +171,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
     private
     void onDateButtonPressed() {
         android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
-        DatePopupFragment f = new DatePopupFragment();
+        DatePopupFragment f = DatePopupFragment.newInstance(mDate);
         f.setTargetFragment(this, DIALOG_DATE_REQUEST_CODE);
         f.show(fm, DIALOG_DATE_TAG);
     }
@@ -163,6 +191,22 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
         }
 
         return isValid;
+    }
+
+    private
+    void updateButtonTitles() {
+        Calendar cal = new GregorianCalendar();
+        TimeZone tz = TimeZone.getDefault();
+        cal.setTimeZone(tz);
+        cal.setTime(mDate);
+
+        SimpleDateFormat timeFormatter = new SimpleDateFormat( "HH:mm" );
+        String timeString = timeFormatter.format(mDate);
+        mTimeButton.setText(timeString);
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat( "dd MMM, yyyy" );
+        String dateString = dateFormatter.format(mDate);
+        mDateButton.setText(dateString);
     }
 
     /**
