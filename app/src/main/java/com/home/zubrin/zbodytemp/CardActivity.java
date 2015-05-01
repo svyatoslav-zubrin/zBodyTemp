@@ -1,8 +1,11 @@
 package com.home.zubrin.zbodytemp;
 
+import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -20,6 +23,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.home.zubrin.zbodytemp.Model.Card;
+import com.home.zubrin.zbodytemp.Model.Person;
+import com.home.zubrin.zbodytemp.Model.Persons;
 import com.home.zubrin.zbodytemp.Model.Record;
 
 public
@@ -31,6 +37,9 @@ class CardActivity
         , RecordTypePopupFragment.OnRecordTypeSelectedListener
         , TempPopupFragment.OnTemperatureSelectionListener
 {
+    public static final String DIALOG_RECORD_TYPE_TAG = "zBodyTemp.tag.dialog_record_type_tag";
+    public static final String DIALOG_TEMP_TAG = "zBodyTemp.tag.dialog_temperature_tag";
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -46,12 +55,16 @@ class CardActivity
      */
     ViewPager mViewPager;
 
-    public static final String DIALOG_RECORD_TYPE_TAG = "zBodyTemp.tag.dialog_record_type_tag";
-    public static final String DIALOG_TEMP_TAG = "zBodyTemp.tag.dialog_temperature_tag";
+    private Person mPerson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        UUID personId = (UUID)intent.getSerializableExtra(PersonsActivityFragment.EXTRA_SELECTED_PERSON_ID);
+        mPerson = Persons.sharedInstance.findPersonById(personId);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_card);
 
@@ -90,6 +103,7 @@ class CardActivity
         }
     }
 
+    // Menu management
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,6 +127,8 @@ class CardActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+    // Tabs management
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -146,13 +162,15 @@ class CardActivity
     }
 
     @Override
-    public void onTemperatureSelected(Float temperature) {
-        Record r = new Record(temperature);
+    public void onTemperatureSelected(Float temperature, Date date) {
+        Record r = new Record(temperature, date);
+        Card c = mPerson.getCard();
+        c.addRecord(r);
     }
 
     @Override
     public void onTemperatureCanceled() {
-
+        // do nothing here
     }
 
     // Dialogs management

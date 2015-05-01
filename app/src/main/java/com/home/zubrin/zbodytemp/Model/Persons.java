@@ -1,6 +1,7 @@
 package com.home.zubrin.zbodytemp.Model;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by zubrin on 4/25/15.
@@ -22,6 +23,15 @@ public class Persons {
 
     public void removePerson(Person person) {
         mPersons.remove(person);
+    }
+
+    public Person findPersonById(UUID id) {
+        for (Person p: mPersons) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     // DEBUG: custom constructor

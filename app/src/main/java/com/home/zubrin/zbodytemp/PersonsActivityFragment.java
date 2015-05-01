@@ -24,6 +24,8 @@ import java.util.ArrayList;
 public
 class PersonsActivityFragment extends android.support.v4.app.ListFragment {
 
+    public static final String EXTRA_SELECTED_PERSON_ID = "home.zubrin.zbodytemp.PersonsActivityFragment.PersonId";
+
     private ArrayList<Person> mPersons;
 
     public
@@ -57,6 +59,7 @@ class PersonsActivityFragment extends android.support.v4.app.ListFragment {
 
         // Show card of the selected person
         Intent i = new Intent(getActivity(), CardActivity.class);
+        i.putExtra(EXTRA_SELECTED_PERSON_ID, p.getId());
         startActivity(i);
     }
 

@@ -20,23 +20,27 @@ public class Card {
 
     // Public setters and getters
 
-    public UUID getId() {
+    public
+    UUID getId() {
         return mId;
     }
 
-    public ArrayList<Record> getRecords() {
+    public
+    ArrayList<Record> getRecords() {
         return mRecords;
     }
 
     // Public methods
 
-    public void addRecord(Record record) {
+    public
+    void addRecord(Record record) {
         if (record != null) {
             mRecords.add(record);
         }
     }
 
-    public Record findRecordById(UUID id) {
+    public
+    Record findRecordById(UUID id) {
         for (Record r: mRecords) {
             if (r.getId().equals(id)) {
                 return r;

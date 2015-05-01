@@ -56,4 +56,9 @@ class Person {
     void setAge(Integer age) {
         mAge = age;
     }
+
+    public
+    Card getCard() {
+        return mCard;
+    }
 }

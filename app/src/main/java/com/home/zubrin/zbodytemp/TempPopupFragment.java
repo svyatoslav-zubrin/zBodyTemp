@@ -143,7 +143,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
             if (validateForm()) {
                 Float value = Float.parseFloat(mTempEditText.getText().toString());
                 getDialog().hide();
-                mListener.onTemperatureSelected(value);
+                mListener.onTemperatureSelected(value, mDate);
             } else {
                 Toast.makeText(getActivity(),
                         R.string.validation_failed_message,
@@ -220,7 +220,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnTemperatureSelectionListener {
-        public void onTemperatureSelected(Float temperature);
+        public void onTemperatureSelected(Float temperature, Date date);
         public void onTemperatureCanceled();
     }
 }
