@@ -1,8 +1,10 @@
 package com.home.zubrin.zbodytemp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -10,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.home.zubrin.zbodytemp.Interfaces.OnCardChangedListener;
 import com.home.zubrin.zbodytemp.Model.Person;
 import com.home.zubrin.zbodytemp.Model.Persons;
 import com.home.zubrin.zbodytemp.Model.Record;
@@ -25,7 +28,11 @@ import java.util.UUID;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class RecordsListFragment extends ListFragment {
+public
+class RecordsListFragment
+        extends ListFragment
+        implements OnCardChangedListener
+{
 
     private static final String ARG_SECTION_NUMBER = "home.zubrin.zbodytemp.RecordsListFragment.section_number";
     private static final String ARG_PERSON_ID = "home.zubrin.zbodytemp.RecordsListFragment.person_id";
@@ -82,6 +89,8 @@ public class RecordsListFragment extends ListFragment {
         mListener = null;
     }
 
+    // List management
+
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -107,6 +116,15 @@ public class RecordsListFragment extends ListFragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
     }
+
+    // Callbacks
+
+    @Override
+    public
+    void onCardChanged() {
+        ((RecordAdapter)getListAdapter()).notifyDataSetChanged();
+    }
+
 
     // Custom list adapter
 
