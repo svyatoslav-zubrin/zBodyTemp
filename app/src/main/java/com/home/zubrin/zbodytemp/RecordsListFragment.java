@@ -33,7 +33,6 @@ class RecordsListFragment
         extends ListFragment
         implements OnCardChangedListener
 {
-
     private static final String ARG_SECTION_NUMBER = "home.zubrin.zbodytemp.RecordsListFragment.section_number";
     private static final String ARG_PERSON_ID = "home.zubrin.zbodytemp.RecordsListFragment.person_id";
 

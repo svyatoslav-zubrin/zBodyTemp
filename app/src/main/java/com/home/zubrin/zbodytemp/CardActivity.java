@@ -221,7 +221,7 @@ class CardActivity
                 return RecordsListFragment.newInstance(position + 1, mPerson.getId());
             }
             else if (position == 1) {
-                return new RecordsPlotFragment();
+                return RecordsPlotFragment.newInstance(position + 1, mPerson.getId());
             }
             else {
                 return PlaceholderFragment.newInstance(position + 1);
