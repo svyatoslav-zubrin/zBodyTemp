@@ -219,7 +219,11 @@ class CardActivity
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0) {
                 return RecordsListFragment.newInstance(position + 1, mPerson.getId());
-            } else {
+            }
+            else if (position == 1) {
+                return new RecordsPlotFragment();
+            }
+            else {
                 return PlaceholderFragment.newInstance(position + 1);
             }
         }
