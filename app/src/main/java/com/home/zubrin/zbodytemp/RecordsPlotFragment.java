@@ -66,20 +66,55 @@ public class RecordsPlotFragment
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_records_plot, container, false);
 
-        // initialize our XYPlot reference:
+        // Prepare plot
         mXYPlot = (XYPlot)v.findViewById(R.id.mySimpleXYPlot);
+        configurePlot();
+        feedPlotWithData();
 
+        return v;
+    }
+
+    @Override
+    public void onCardChanged() {
+        fetchTemperatures();
+        mXYPlot.clear();
+        feedPlotWithData();
+        mXYPlot.redraw();
+    }
+
+    // Data management
+
+    private void fetchTemperatures() {
+        Person p = Persons.sharedInstance.findPersonById(mPersonId);
+        if (p != null) {
+            ArrayList<Record> records = p.getCard().getRecords();
+            mTemperatures.clear();
+            for (Record r: records) {
+                mTemperatures.add(r.getValue());
+            }
+        }
+
+        Log.d("RecordsPlotFragment", "Temperatures.count = " + mTemperatures.size());
+    }
+
+    // Plot management
+
+    private void configurePlot() {
         // default plot settings
         mXYPlot.setBorderStyle(Plot.BorderStyle.SQUARE, null, null);
-        mXYPlot.setPlotMargins(0,0,0,0);
-        mXYPlot.setPlotPadding(0,0,0,0);
+        mXYPlot.setPlotMargins(0, 0, 0, 0);
+        mXYPlot.setPlotPadding(0, 0, 0, 0);
         mXYPlot.setRangeStepMode(XYStepMode.INCREMENT_BY_VAL);
         mXYPlot.setRangeStepValue(1);
         mXYPlot.setRangeBoundaries(Record.MinTemp, Record.MaxTemp, BoundaryMode.FIXED);
         mXYPlot.setRangeValueFormat(new DecimalFormat("##.#"));
+        mXYPlot.setTicksPerRangeLabel(1);
+        mXYPlot.getGraphWidget().setDomainLabelOrientation(-45);
+    }
 
+    private void feedPlotWithData() {
         // Create a couple arrays of y-values to plot:
-        Number[] series1Numbers = mTemperatures.toArray(new Number[mTemperatures.size()]); //{1, 8, 5, 2, 7, 4};
+        Number[] series1Numbers = mTemperatures.toArray(new Number[mTemperatures.size()]);
 
         // Turn the above arrays into XYSeries':
         XYSeries series1 = new SimpleXYSeries(
@@ -96,30 +131,5 @@ public class RecordsPlotFragment
 
         // add a new series' to the xyplot:
         mXYPlot.addSeries(series1, series1Format);
-
-        // reduce the number of range labels
-        mXYPlot.setTicksPerRangeLabel(3);
-        mXYPlot.getGraphWidget().setDomainLabelOrientation(-45);
-
-        return v;
-    }
-
-    @Override
-    public void onCardChanged() {
-        fetchTemperatures();
-        mXYPlot.redraw();
-    }
-
-    private void fetchTemperatures() {
-        Person p = Persons.sharedInstance.findPersonById(mPersonId);
-        if (p != null) {
-            ArrayList<Record> records = p.getCard().getRecords();
-            mTemperatures.clear();
-            for (Record r: records) {
-                mTemperatures.add(r.getValue());
-            }
-        }
-
-        Log.d("RecordsPlotFragment", "Temperatures.count = " + mTemperatures.size());
     }
 }
