@@ -1,6 +1,7 @@
 package com.home.zubrin.zbodytemp;
 
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.RectF;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidplot.Plot;
+import com.androidplot.PlotListener;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.PointLabelFormatter;
@@ -36,13 +38,14 @@ import java.util.UUID;
  */
 public class RecordsPlotFragment
         extends Fragment
-        implements OnCardChangedListener
+        implements OnCardChangedListener, PlotListener
 {
     private static final String ARG_SECTION_NUMBER = "home.zubrin.zbodytemp.RecordsPlotFragment.section_number";
     private static final String ARG_PERSON_ID = "home.zubrin.zbodytemp.RecordsPlotFragment.person_id";
 
     // UI
     private XYPlot mXYPlot;
+    private Boolean isGradientAdded = false;
     // model
     private UUID mPersonId;
     private ArrayList<Float> mTemperatures = new ArrayList<>();
@@ -74,6 +77,7 @@ public class RecordsPlotFragment
         mXYPlot = (XYPlot)v.findViewById(R.id.mySimpleXYPlot);
         configurePlot();
         feedPlotWithData();
+        mXYPlot.addListener(this);
 
         return v;
     }
@@ -82,7 +86,6 @@ public class RecordsPlotFragment
     public void onCardChanged() {
         fetchTemperatures();
         mXYPlot.clear();
-        configurePlot();
         feedPlotWithData();
         mXYPlot.redraw();
     }
@@ -114,7 +117,9 @@ public class RecordsPlotFragment
         mXYPlot.setRangeBoundaries(Record.MinTemp, Record.MaxTemp, BoundaryMode.FIXED);
         mXYPlot.setRangeValueFormat(new DecimalFormat("##.# "));
         mXYPlot.setTicksPerRangeLabel(1);
+    }
 
+    private  void configurePlotGradient() {
         // Gradient background
         RectF graphRect = mXYPlot.getGraphWidget().getGridRect();
         if (graphRect != null) {
@@ -161,5 +166,20 @@ public class RecordsPlotFragment
 
         // add a new series' to the xyplot:
         mXYPlot.addSeries(series1, series1Format);
+    }
+
+    // Plot lifecycle callbacks
+
+    @Override
+    public void onBeforeDraw(Plot source, Canvas canvas) {
+    }
+
+    @Override
+    public void onAfterDraw(Plot source, Canvas canvas) {
+        if (isGradientAdded == false) {
+            configurePlotGradient();
+            source.redraw();
+            isGradientAdded = true;
+        }
     }
 }
