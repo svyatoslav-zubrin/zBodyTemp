@@ -1,6 +1,10 @@
 package com.home.zubrin.zbodytemp;
 
 
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -78,6 +82,7 @@ public class RecordsPlotFragment
     public void onCardChanged() {
         fetchTemperatures();
         mXYPlot.clear();
+        configurePlot();
         feedPlotWithData();
         mXYPlot.redraw();
     }
@@ -107,9 +112,34 @@ public class RecordsPlotFragment
         mXYPlot.setRangeStepMode(XYStepMode.INCREMENT_BY_VAL);
         mXYPlot.setRangeStepValue(1);
         mXYPlot.setRangeBoundaries(Record.MinTemp, Record.MaxTemp, BoundaryMode.FIXED);
-        mXYPlot.setRangeValueFormat(new DecimalFormat("##.#"));
+        mXYPlot.setRangeValueFormat(new DecimalFormat("##.# "));
         mXYPlot.setTicksPerRangeLabel(1);
-        mXYPlot.getGraphWidget().setDomainLabelOrientation(-45);
+
+        // Gradient background
+        RectF graphRect = mXYPlot.getGraphWidget().getGridRect();
+        if (graphRect != null) {
+            int segmentsCount = (int)(Record.MaxTemp - Record.MinTemp);
+            float segmentSize = 1.0f / segmentsCount;
+            LinearGradient lg = new LinearGradient(
+                    0,
+                    graphRect.top,
+                    0,
+                    graphRect.bottom,
+                    new int[]{
+                            Color.RED,
+                            Color.WHITE,
+                            Color.WHITE,
+                            Color.BLUE},
+                    new float[]{
+                            0,
+                            segmentSize * (Record.MaxTemp - 37.0f),
+                            segmentSize * (Record.MaxTemp - 36.0f),
+                            segmentSize * segmentsCount
+                    },
+                    Shader.TileMode.CLAMP
+            );
+            mXYPlot.getGraphWidget().getGridBackgroundPaint().setShader(lg);
+        }
     }
 
     private void feedPlotWithData() {
