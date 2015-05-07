@@ -142,7 +142,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
         if (mListener != null) {
             if (validateForm()) {
                 Float value = Float.parseFloat(mTempEditText.getText().toString());
-                getDialog().hide();
+                getDialog().dismiss();
                 mListener.onTemperatureSelected(value, mDate);
             } else {
                 Toast.makeText(getActivity(),
@@ -155,7 +155,7 @@ public class TempPopupFragment extends android.support.v4.app.DialogFragment {
     private
     void onCancelButtonPressed() {
         if (mListener != null) {
-            getDialog().hide();
+            getDialog().dismiss();
             mListener.onTemperatureCanceled();
         }
     }

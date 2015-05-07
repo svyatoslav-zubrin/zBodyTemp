@@ -104,11 +104,11 @@ public class DatePopupFragment extends android.support.v4.app.DialogFragment {
 
     private void onOkButtonPressed() {
         sendResult(Activity.RESULT_OK);
-        getDialog().hide();
+        getDialog().dismiss();
     }
 
     private void onCancelButtonPressed() {
-        getDialog().hide();
+        getDialog().dismiss();
     }
 
     // Private
