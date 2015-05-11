@@ -26,10 +26,17 @@ import com.home.zubrin.zbodytemp.Interfaces.OnCardChangedListener;
 import com.home.zubrin.zbodytemp.Model.Person;
 import com.home.zubrin.zbodytemp.Model.Persons;
 import com.home.zubrin.zbodytemp.Model.Record;
+import com.home.zubrin.zbodytemp.Utils.DateUtils;
 
 import java.text.DecimalFormat;
+import java.text.FieldPosition;
+import java.text.Format;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.UUID;
 
 
@@ -49,6 +56,7 @@ public class RecordsPlotFragment
     // model
     private UUID mPersonId;
     private ArrayList<Float> mTemperatures = new ArrayList<>();
+    private ArrayList<Long> mDates = new ArrayList<>();
 
     public static RecordsPlotFragment newInstance(int sectionNumber, UUID personId) {
         RecordsPlotFragment fragment = new RecordsPlotFragment();
@@ -97,12 +105,12 @@ public class RecordsPlotFragment
         if (p != null) {
             ArrayList<Record> records = p.getCard().getRecords();
             mTemperatures.clear();
+            mDates.clear();
             for (Record r: records) {
                 mTemperatures.add(r.getValue());
+                mDates.add(r.getDate().getTime());
             }
         }
-
-        Log.d("RecordsPlotFragment", "Temperatures.count = " + mTemperatures.size());
     }
 
     // Plot management
@@ -112,11 +120,30 @@ public class RecordsPlotFragment
         mXYPlot.setBorderStyle(Plot.BorderStyle.SQUARE, null, null);
         mXYPlot.setPlotMargins(0, 0, 0, 0);
         mXYPlot.setPlotPadding(0, 0, 0, 0);
+        // range parameters
         mXYPlot.setRangeStepMode(XYStepMode.INCREMENT_BY_VAL);
         mXYPlot.setRangeStepValue(1);
         mXYPlot.setRangeBoundaries(Record.MinTemp, Record.MaxTemp, BoundaryMode.FIXED);
-        mXYPlot.setRangeValueFormat(new DecimalFormat("##.# "));
+        mXYPlot.setRangeValueFormat(new DecimalFormat("##.#"));
         mXYPlot.setTicksPerRangeLabel(1);
+        // Domain parameters
+        mXYPlot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 2 * 60 * 60 * 1000);
+        mXYPlot.setDomainValueFormat(new Format() {
+
+            private SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+
+            @Override
+            public StringBuffer format(Object object, StringBuffer buffer, FieldPosition field) {
+                long timestamp = ((Number)object).longValue();
+                Date d = new Date(timestamp);
+                return format.format(d, buffer, field);
+            }
+
+            @Override
+            public Object parseObject(String string, ParsePosition position) {
+                return null;
+            }
+        });
     }
 
     private  void configurePlotGradient() {
@@ -149,13 +176,14 @@ public class RecordsPlotFragment
 
     private void feedPlotWithData() {
         // Create a couple arrays of y-values to plot:
-        Number[] series1Numbers = mTemperatures.toArray(new Number[mTemperatures.size()]);
+        Number[] rangeValues = mTemperatures.toArray(new Number[mTemperatures.size()]);
+        Number[] domainValues  = mDates.toArray(new Number[mDates.size()]);
 
         // Turn the above arrays into XYSeries':
         XYSeries series1 = new SimpleXYSeries(
-                Arrays.asList(series1Numbers),          // SimpleXYSeries takes a List so turn our array into a List
-                SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, // Y_VALS_ONLY means use the element index as the x value
-                "Series1");                             // Set the display title of the series
+                Arrays.asList(domainValues),
+                Arrays.asList(rangeValues),
+                "Series1");
 
         // Create a formatter to use for drawing a series using LineAndPointRenderer
         // and configure it from xml:
@@ -166,6 +194,24 @@ public class RecordsPlotFragment
 
         // add a new series' to the xyplot:
         mXYPlot.addSeries(series1, series1Format);
+
+        // set X-axis boundaries
+        Long lowDate = new Date().getTime();
+        Long upDate  = new Date().getTime();
+
+        if (mDates.size() > 0) {
+            lowDate = mDates.get(0);
+            upDate  = mDates.get(mDates.size() - 1);
+        }
+
+        Long lowBoundary = DateUtils.startOfDay(new Date(lowDate)).getTime();
+        Long upBoundary  = DateUtils.endOfDay(new Date(upDate)).getTime();
+
+        mXYPlot.setDomainBoundaries(lowBoundary, upBoundary, BoundaryMode.FIXED);
+
+        // set X-axis tick labels count
+        long step = (upBoundary - lowBoundary) / 4;
+        mXYPlot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, step);
     }
 
     // Plot lifecycle callbacks
