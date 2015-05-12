@@ -16,9 +16,11 @@ import com.home.zubrin.zbodytemp.Interfaces.OnCardChangedListener;
 import com.home.zubrin.zbodytemp.Model.Person;
 import com.home.zubrin.zbodytemp.Model.Persons;
 import com.home.zubrin.zbodytemp.Model.Record;
+import com.home.zubrin.zbodytemp.Model.RecordDateComparator;
 import com.home.zubrin.zbodytemp.dummy.DummyContent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -60,16 +62,10 @@ class RecordsListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UUID personId = (UUID)getArguments().getSerializable(ARG_PERSON_ID);
-        Person p = Persons.sharedInstance.findPersonById(personId);
-        if (p != null) {
-            mRecords = p.getCard().getRecords();
-        }
-
+        fetchData();
         RecordAdapter adapter = new RecordAdapter(mRecords);
         setListAdapter(adapter);
     }
-
 
 //    @Override
 //    public void onAttach(Activity activity) {
@@ -147,13 +143,22 @@ class RecordsListFragment
 
             TextView titleTextView =
                     (TextView)convertView.findViewById(R.id.activity_card_records_row_tempTextView);
-            titleTextView.setText(r.getValue().toString() + " C");
+            titleTextView.setText(r.getValue().toString() + " \u00B0C");
 
             TextView dateTextView =
                     (TextView)convertView.findViewById(R.id.activity_card_records_row_timeTextView);
             dateTextView.setText(r.getDate().toString());
 
             return convertView;
+        }
+    }
+
+    private
+    void fetchData() {
+        UUID personId = (UUID)getArguments().getSerializable(ARG_PERSON_ID);
+        Person p = Persons.sharedInstance.findPersonById(personId);
+        if (p != null) {
+            mRecords = p.getCard().getRecords();
         }
     }
 }
