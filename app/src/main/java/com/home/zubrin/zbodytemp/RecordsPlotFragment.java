@@ -130,7 +130,7 @@ public class RecordsPlotFragment
         mXYPlot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 2 * 60 * 60 * 1000);
         mXYPlot.setDomainValueFormat(new Format() {
 
-            private SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+            private SimpleDateFormat format = new SimpleDateFormat("HH:mm dd/MM");
 
             @Override
             public StringBuffer format(Object object, StringBuffer buffer, FieldPosition field) {
@@ -210,7 +210,7 @@ public class RecordsPlotFragment
         mXYPlot.setDomainBoundaries(lowBoundary, upBoundary, BoundaryMode.FIXED);
 
         // set X-axis tick labels count
-        long step = (upBoundary - lowBoundary) / 4;
+        long step = 12 * 60 * 60 * 1000; // 12 hours
         mXYPlot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, step);
     }
 
