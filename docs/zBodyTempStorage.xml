@@ -1,0 +1,28 @@
+<user>
+	<name>Slava</name>
+	<surname>Zubrin</surname>
+	<birthdate>143990099009900</birthdate>
+	<disease> // stands for current desease
+		<record type="note" date="143990099009900">Some data may be here. Type of data will depend on desease type. For temperature it will be float</record>
+		<record type="temp" date="143990099009900">37.7</record>
+		<record type="medc" date="143990099009900">
+			<name>nurofen</name>
+			<units>ml</units>
+			<amount>6</amount>
+		</record>
+	</disease>
+	<archived> // group of archived deseases
+		<disease name="Some name 1" start="143990099009900" finish="143990099009900"> // stands for archived desease
+			<record type="temperature" date="143990099009900">36.7</record>
+			<record type="temperature" date="143990099009900">37.7</record>
+		</disease>
+		<disease name="Some name 2" start="143990099009900" finish="143990099009900"> // stands for archived desease
+			<record type="temperature" date="143990099009900">36.7</record>
+			<record type="temperature" date="143990099009900">37.7</record>
+		</disease>
+		<disease name="Some name 3" start="143990099009900" finish="143990099009900"> // stands for archived desease
+			<record type="temperature" date="143990099009900">36.7</record>
+			<record type="temperature" date="143990099009900">37.7</record>
+		</disease>
+	</archived>
+</user>
