@@ -1,6 +1,7 @@
 package com.home.zubrin.zbodytemp.Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -36,6 +37,7 @@ public class Card {
     void addRecord(Record record) {
         if (record != null) {
             mRecords.add(record);
+            Collections.sort(mRecords, new RecordDateComparator());
         }
     }
 

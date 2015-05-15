@@ -83,7 +83,7 @@ public class RecordTypePopupFragment extends android.support.v4.app.DialogFragme
 
     private
     void finishSelection() {
-        getDialog().hide();
+        getDialog().dismiss();
         mListener.onRecordTypeSelected(mSelectedType);
     }
 }

@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.home.zubrin.zbodytemp.Interfaces.OnCardChangedListener;
 import com.home.zubrin.zbodytemp.Model.Card;
 import com.home.zubrin.zbodytemp.Model.Person;
 import com.home.zubrin.zbodytemp.Model.Persons;
@@ -166,6 +168,8 @@ class CardActivity
         Record r = new Record(temperature, date);
         Card c = mPerson.getCard();
         c.addRecord(r);
+
+        informFragmentsAboutCardChanges();
     }
 
     @Override
@@ -189,6 +193,16 @@ class CardActivity
         f.show(fm, DIALOG_TEMP_TAG);
     }
 
+    private
+    void informFragmentsAboutCardChanges() {
+        FragmentManager fm = getSupportFragmentManager();
+        for (Fragment f: fm.getFragments()) {
+            if (f instanceof OnCardChangedListener) {
+                ((OnCardChangedListener) f).onCardChanged();
+            }
+        }
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -205,15 +219,18 @@ class CardActivity
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0) {
                 return RecordsListFragment.newInstance(position + 1, mPerson.getId());
-            } else {
+            }
+            else if (position == 1) {
+                return RecordsPlotFragment.newInstance(position + 1, mPerson.getId());
+            }
+            else {
                 return PlaceholderFragment.newInstance(position + 1);
             }
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -234,7 +251,11 @@ class CardActivity
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static
+    class PlaceholderFragment
+            extends Fragment
+            implements OnCardChangedListener
+    {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -261,6 +282,11 @@ class CardActivity
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_card, container, false);
             return rootView;
+        }
+
+        @Override
+        public void onCardChanged() {
+            // do nothing in that case (stub fragment implementation)
         }
     }
 }
