@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+// TODO: add native buttons to dialog
 
 /**
  * A simple {@link Fragment} subclass.

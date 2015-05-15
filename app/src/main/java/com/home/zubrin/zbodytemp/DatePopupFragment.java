@@ -16,6 +16,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 
+// TODO: add native buttons to dialog
+
 /**
  * A simple {@link Fragment} subclass.
  */

@@ -9,6 +9,8 @@ import android.widget.Button;
 
 import com.home.zubrin.zbodytemp.Model.Record;
 
+// TODO: add native buttons to dialog
+
 public class RecordTypePopupFragment extends android.support.v4.app.DialogFragment {
 
     // UI
