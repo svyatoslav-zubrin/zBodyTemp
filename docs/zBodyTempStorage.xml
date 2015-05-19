@@ -1,7 +1,9 @@
-<user>
-	<name>Slava</name>
-	<surname>Zubrin</surname>
-	<birthdate>143990099009900</birthdate>
+<card>
+	<person id="some_unique_id">
+		<name>Slava</name>
+		<surname>Zubrin</surname>
+		<birthdate>143990099009900</birthdate>
+	</person>
 	<disease> // stands for current desease
 		<record type="note" date="143990099009900">Some data may be here. Type of data will depend on desease type. For temperature it will be float</record>
 		<record type="temp" date="143990099009900">37.7</record>
@@ -11,7 +13,7 @@
 			<amount>6</amount>
 		</record>
 	</disease>
-	<archived> // group of archived deseases
+	<archive> // group of archived deseases
 		<disease name="Some name 1" start="143990099009900" finish="143990099009900"> // stands for archived desease
 			<record type="temperature" date="143990099009900">36.7</record>
 			<record type="temperature" date="143990099009900">37.7</record>
@@ -24,5 +26,8 @@
 			<record type="temperature" date="143990099009900">36.7</record>
 			<record type="temperature" date="143990099009900">37.7</record>
 		</disease>
-	</archived>
-</user>
+	</archive>
+	</card>
+	<person>
+
+	</person>

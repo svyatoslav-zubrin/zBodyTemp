@@ -8,6 +8,12 @@ import java.util.UUID;
 public
 class Person {
 
+    public static String XML_TAG_MAIN      = "person";
+    public static String XML_TAG_ID        = "id";
+    public static String XML_TAG_NAME      = "name";
+    public static String XML_TAG_SURNAME   = "surname";
+    public static String XML_TAG_BIRTHDATE = "birthdate";
+
     private UUID mId;
     private String mName;
     private Integer mAge;

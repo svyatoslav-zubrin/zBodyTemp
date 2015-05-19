@@ -8,6 +8,15 @@ import java.util.UUID;
  */
 public class Record
 {
+
+    public static String XML_TAG_MAIN   = "record";
+    public static String XML_TAG_ID     = "id";
+    public static String XML_TAG_NAME   = "name";
+    public static String XML_TAG_UNITS  = "units";
+    public static String XML_TAG_AMOUNT = "amount";
+    public static String XML_ATTR_TYPE  = "type";
+    public static String XML_ATTR_DATE  = "date";
+
     public static Float MinTemp = 34.0f;
     public static Float MaxTemp = 42.0f;
 

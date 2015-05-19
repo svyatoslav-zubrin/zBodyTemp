@@ -9,6 +9,11 @@ import java.util.UUID;
  */
 public class Card {
 
+    public static String XML_TAG_MAIN    = "card";
+    public static String XML_TAG_ID      = "id";
+    public static String XML_TAG_DISEASE = "disease";
+    public static String XML_TAG_ARCHIVE = "archive";
+
     private UUID mId;
     private ArrayList<Record> mRecords;
 
