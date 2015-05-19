@@ -1,18 +1,25 @@
 package com.home.zubrin.zbodytemp.Model;
 
+import com.home.zubrin.zbodytemp.Interfaces.ZBodyTempXMLSerializedObject;
+
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.IOError;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.UUID;
 
 /**
  * Created by zubrin on 4/25/15.
  */
 public
-class Person {
+class Person implements ZBodyTempXMLSerializedObject {
 
-    public static String XML_TAG_MAIN      = "person";
-    public static String XML_TAG_ID        = "id";
-    public static String XML_TAG_NAME      = "name";
-    public static String XML_TAG_SURNAME   = "surname";
-    public static String XML_TAG_BIRTHDATE = "birthdate";
+    public static String XML_TAG_MAIN       = "person";
+    public static String XML_ATTR_ID        = "id";
+    public static String XML_ATTR_NAME      = "name";
+    public static String XML_ATTR_SURNAME   = "surname";
+    public static String XML_ATTR_BIRTHDATE = "birthdate";
 
     private UUID mId;
     private String mName;
@@ -34,6 +41,18 @@ class Person {
     public
     String toString() {
         return mName;
+    }
+
+    // XML Serialization
+
+    @Override
+    public void toXML(XmlSerializer serializer) throws IOException {
+
+        serializer.startTag("", XML_TAG_MAIN);
+        serializer.attribute("", XML_ATTR_ID, mId.toString());
+        serializer.attribute("", XML_ATTR_NAME, mName);
+        mCard.toXML(serializer);
+        serializer.endTag("", XML_TAG_MAIN);
     }
 
     // Public setters and getters

@@ -1,16 +1,23 @@
 package com.home.zubrin.zbodytemp.Model;
 
+import com.home.zubrin.zbodytemp.Interfaces.ZBodyTempXMLSerializedObject;
+import com.home.zubrin.zbodytemp.Model.xml.ZBodyTempXMLSerializer;
+
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Date;
 import java.util.UUID;
 
 /**
  * Created by zubrin on 4/25/15.
  */
-public class Record
+public class Record implements ZBodyTempXMLSerializedObject
 {
 
     public static String XML_TAG_MAIN   = "record";
-    public static String XML_TAG_ID     = "id";
+    public static String XML_ATTR_ID    = "id";
     public static String XML_TAG_NAME   = "name";
     public static String XML_TAG_UNITS  = "units";
     public static String XML_TAG_AMOUNT = "amount";
@@ -28,7 +35,16 @@ public class Record
     public enum Type {
         TEMPERATURE,
         MEDICINE,
-        NOTE
+        NOTE;
+
+        public
+        String toString() {
+            switch (this) {
+                case TEMPERATURE: return "temperature";
+                case MEDICINE: return "medicine";
+                case NOTE: return "note";
+            }
+        }
     }
 
     // Constructors
@@ -54,6 +70,19 @@ public class Record
 
         mValue = value;
         mDate = date;
+    }
+
+    // XML Serialization
+
+    @Override
+    public void toXML(XmlSerializer serializer) throws IOException {
+        serializer.startTag("", XML_TAG_MAIN);
+        serializer.attribute("", XML_ATTR_ID, mId.toString());
+        serializer.attribute("", XML_ATTR_TYPE, mType.toString());
+        serializer.attribute("", XML_ATTR_DATE, mDate.toString()); // TODO: correct formatter needed
+        serializer.attribute("", XML_TAG_UNITS, "C");
+        serializer.text(mValue.toString());
+        serializer.endTag("", XML_TAG_MAIN);
     }
 
     // Public setters and getters

@@ -5,6 +5,7 @@ import android.util.Xml;
 
 import com.home.zubrin.zbodytemp.Model.Card;
 import com.home.zubrin.zbodytemp.Model.Person;
+import com.home.zubrin.zbodytemp.Model.Persons;
 
 import org.w3c.dom.Element;
 import org.xmlpull.v1.XmlSerializer;
@@ -28,7 +29,7 @@ public class ZBodyTempXMLSerializer {
         mFileName = fileName;
     }
 
-    public void saveCard(Card card) throws IOException {
+    public void serializePersons(Persons persons) throws IOException {
 
         // see https://xjaphx.wordpress.com/2011/10/27/android-xml-adventure-create-write-xml-data/ for help (section 3)
 
@@ -37,9 +38,6 @@ public class ZBodyTempXMLSerializer {
         serializer.setOutput(writer);
 
         serializer.startDocument("UTF-8", true);
-        serializer.startTag("", Card.XML_TAG_MAIN);         // <card>
-        serializer.startTag("", Person.XML_TAG_MAIN);       //   <person>
-        serializer.startTag("", Person.XML_TAG_NAME);       //     <name>
-        serializer.attribute("", Person.XML_TAG_ID, String.valueOf(card.)) // TODO: continue from here
+        persons.toXML(serializer);
     }
 }

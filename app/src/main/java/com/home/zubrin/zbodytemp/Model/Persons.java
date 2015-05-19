@@ -1,12 +1,18 @@
 package com.home.zubrin.zbodytemp.Model;
 
+import com.home.zubrin.zbodytemp.Interfaces.ZBodyTempXMLSerializedObject;
+
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.UUID;
 
 /**
  * Created by zubrin on 4/25/15.
  */
-public class Persons {
+public class Persons implements ZBodyTempXMLSerializedObject {
 
     public static final Persons sharedInstance = new Persons();
     // TODO: correct singleton implementation (prevent creation of multiple instances from code)...
@@ -33,6 +39,17 @@ public class Persons {
         }
         return null;
     }
+
+    // XML Serialization
+
+    @Override
+    public
+    void toXML(XmlSerializer serializer) throws IOException {
+        for (Person p: mPersons) {
+            p.toXML(serializer);
+        }
+    }
+
 
     // DEBUG: custom constructor
 
