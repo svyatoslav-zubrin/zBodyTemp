@@ -29,6 +29,7 @@ import com.home.zubrin.zbodytemp.Model.Card;
 import com.home.zubrin.zbodytemp.Model.Person;
 import com.home.zubrin.zbodytemp.Model.Persons;
 import com.home.zubrin.zbodytemp.Model.Record;
+import com.home.zubrin.zbodytemp.Model.xml.ZBodyTempXMLSerializer;
 
 public
 class CardActivity
@@ -124,6 +125,10 @@ class CardActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.activity_card_menu_add) {
             showRecordTypeSelectionDialog();
+            return true;
+        }
+        else if (id == R.id.activity_card_menu_save) {
+            ZBodyTempXMLSerializer.serializePerson(mPerson); // TODO: should serialize all persons probably
             return true;
         }
 

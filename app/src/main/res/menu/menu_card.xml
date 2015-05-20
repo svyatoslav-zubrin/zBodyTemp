@@ -9,4 +9,9 @@
         android:icon="@android:drawable/ic_menu_add"
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/activity_card_menu_save"
+        android:title="@string/activity_card_menu_save"
+        android:icon="@android:drawable/ic_menu_save"
+        app:showAsAction="ifRoom" />
 </menu>

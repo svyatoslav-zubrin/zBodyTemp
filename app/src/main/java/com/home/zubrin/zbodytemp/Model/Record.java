@@ -43,6 +43,7 @@ public class Record implements ZBodyTempXMLSerializedObject
                 case TEMPERATURE: return "temperature";
                 case MEDICINE: return "medicine";
                 case NOTE: return "note";
+                default:return "temperature";
             }
         }
     }
