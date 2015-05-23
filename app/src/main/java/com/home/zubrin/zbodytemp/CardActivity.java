@@ -30,6 +30,7 @@ import com.home.zubrin.zbodytemp.Model.Person;
 import com.home.zubrin.zbodytemp.Model.Persons;
 import com.home.zubrin.zbodytemp.Model.Record;
 import com.home.zubrin.zbodytemp.Model.xml.ZBodyTempXMLSerializer;
+import com.home.zubrin.zbodytemp.Storage.XMLStorage;
 
 public
 class CardActivity
@@ -128,7 +129,7 @@ class CardActivity
             return true;
         }
         else if (id == R.id.activity_card_menu_save) {
-            ZBodyTempXMLSerializer.serializePerson(mPerson); // TODO: should serialize all persons probably
+            XMLStorage.save();
             return true;
         }
 

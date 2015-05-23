@@ -1,6 +1,7 @@
 package com.home.zubrin.zbodytemp.Model;
 
 import com.home.zubrin.zbodytemp.Interfaces.ZBodyTempXMLSerializedObject;
+import com.home.zubrin.zbodytemp.Storage.XMLStorage;
 
 import org.xmlpull.v1.XmlSerializer;
 

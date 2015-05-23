@@ -1,8 +1,12 @@
 package com.home.zubrin.zbodytemp.Storage;
 
+import com.home.zubrin.zbodytemp.Model.Persons;
+import com.home.zubrin.zbodytemp.Model.xml.ZBodyTempXMLSerializer;
+
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -19,14 +23,20 @@ public class XMLStorage {
         OutputStream out = null;
         try {
             out = new BufferedOutputStream(new FileOutputStream(storageBaseFileName));
-
+            String xml = ZBodyTempXMLSerializer.serializePersons(Persons.sharedInstance);
+            out.write(xml.getBytes());
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        finally {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
             if (out != null) {
-                out.close();
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
