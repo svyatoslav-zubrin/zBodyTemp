@@ -66,7 +66,7 @@ public class ZBodyTempXMLSerializer {
     public static
     void serializePerson(Person person) {
 
-        // see https://xjaphx.wordpress.com/2011/10/27/android-xml-adventure-create-write-xml-data/ for help (section 3)
+        // see https://xjaphx.qwordpress.com/2011/10/27/android-xml-adventure-create-write-xml-data/ for help (section 3)
 
         XmlSerializer serializer = Xml.newSerializer();
         StringWriter writer = new StringWriter();
