@@ -37,9 +37,4 @@ public class ZBodyTempXMLSerializer {
 
         return writer.toString();
     }
-
-    static public
-    void deserializePersons(String xmlString) {
-        return;
-    }
 }

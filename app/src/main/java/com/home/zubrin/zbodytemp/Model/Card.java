@@ -2,6 +2,8 @@ package com.home.zubrin.zbodytemp.Model;
 
 import com.home.zubrin.zbodytemp.Interfaces.ZBodyTempXMLSerializedObject;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
@@ -77,5 +79,11 @@ public class Card implements ZBodyTempXMLSerializedObject {
         }
         serializer.endTag("", XML_TAG_DISEASE);
         serializer.endTag("", XML_TAG_MAIN);
+    }
+
+    static public
+    Object fromXML(String xml, XmlPullParser parser) throws XmlPullParserException, IOException {
+        UUID id = UUID.fromString(parser.getAttributeValue(null, XML_ATTR_ID));
+
     }
 }

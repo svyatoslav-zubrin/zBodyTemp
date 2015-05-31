@@ -2,6 +2,8 @@ package com.home.zubrin.zbodytemp.Model;
 
 import com.home.zubrin.zbodytemp.Interfaces.ZBodyTempXMLSerializedObject;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOError;
@@ -54,6 +56,13 @@ class Person implements ZBodyTempXMLSerializedObject {
         mCard.toXML(serializer);
         serializer.endTag("", XML_TAG_MAIN);
     }
+
+    @Override
+    public
+    Object fromXML(String xml, XmlPullParser parser) throws XmlPullParserException, IOException {
+        return null;
+    }
+
 
     // Public setters and getters
 
