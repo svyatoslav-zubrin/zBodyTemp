@@ -1,12 +1,12 @@
 package com.home.zubrin.zbodytemp.Model;
 
 import com.home.zubrin.zbodytemp.Interfaces.ZBodyTempXMLSerializedObject;
-import com.home.zubrin.zbodytemp.Model.xml.ZBodyTempXMLSerializer;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.Date;
 import java.util.UUID;
 
@@ -37,13 +37,29 @@ public class Record implements ZBodyTempXMLSerializedObject
         MEDICINE,
         NOTE;
 
+        static public
+        Type fromString(String xmlString) {
+            switch (xmlString) {
+                case "note":
+                    return NOTE;
+                case "medicine":
+                    return MEDICINE;
+                case "temperatrue":
+                default: return TEMPERATURE;
+            }
+        }
+
         public
         String toString() {
             switch (this) {
-                case TEMPERATURE: return "temperature";
-                case MEDICINE: return "medicine";
-                case NOTE: return "note";
-                default:return "temperature";
+                case TEMPERATURE:
+                    return "temperature";
+                case MEDICINE:
+                    return "medicine";
+                case NOTE:
+                    return "note";
+                default:
+                    return "temperature";
             }
         }
     }
@@ -84,6 +100,19 @@ public class Record implements ZBodyTempXMLSerializedObject
         serializer.attribute("", XML_TAG_UNITS, "C");
         serializer.text(mValue.toString());
         serializer.endTag("", XML_TAG_MAIN);
+    }
+
+    // XML Deserialization
+
+    static public
+    Record fromXML(String xml, XmlPullParser parser) throws XmlPullParserException, IOException {
+        String id = parser.getAttributeValue(null, XML_ATTR_ID);
+        Type type = Type.fromString(parser.getAttributeValue(null, XML_ATTR_TYPE));
+        Date date = Date.parse(parser.getAttributeValue(null, XML_ATTR_DATE));
+        Float value = Float.parseFloat(parser.getText());
+
+        Record r = new Record(value, date);
+        return r;
     }
 
     // Public setters and getters
