@@ -20,6 +20,7 @@
     <string name="activity_card_note_title">Notes</string>
     <string name="activity_card_menu_add">New record</string>
     <string name="activity_card_menu_save">Save</string>
+    <string name="activity_card_menu_read">Read</string>
 
     <!--Record type popup-->
     <string name="record_type_popup_title">Select record type</string>

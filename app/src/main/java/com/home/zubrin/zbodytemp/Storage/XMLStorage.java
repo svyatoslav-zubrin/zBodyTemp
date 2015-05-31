@@ -21,6 +21,8 @@ public class XMLStorage {
 
     static private String storageBaseFileName = "zBodyTempXMLStorage";
 
+    // Public methods
+
     static public
     void save() {
         FileOutputStream fileOutputStream;
@@ -33,13 +35,16 @@ public class XMLStorage {
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             if (out != null) {
                 try {
                     out.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -50,14 +55,17 @@ public class XMLStorage {
     String read() {
         try {
             return getStringFromFile(storageBaseFileName);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return "";
     }
 
+    // Private methods
 
-    private static String convertStreamToString(InputStream is) throws Exception {
+    private static
+    String convertStreamToString(InputStream is) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
         String line = null;
@@ -68,7 +76,8 @@ public class XMLStorage {
         return sb.toString();
     }
 
-    private  static String getStringFromFile (String filePath) throws Exception {
+    private static
+    String getStringFromFile (String filePath) throws Exception {
         File fl = new File(filePath);
         FileInputStream fin = new FileInputStream(fl);
         String ret = convertStreamToString(fin);

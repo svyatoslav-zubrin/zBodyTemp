@@ -132,6 +132,11 @@ class CardActivity
             XMLStorage.save();
             return true;
         }
+        else if (id == R.id.activity_card_menu_read) {
+            String res = XMLStorage.read();
+            Log.i("XML_Read", res);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

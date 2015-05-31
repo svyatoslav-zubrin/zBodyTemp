@@ -14,4 +14,10 @@
         android:title="@string/activity_card_menu_save"
         android:icon="@android:drawable/ic_menu_save"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/activity_card_menu_read"
+        android:title="@string/activity_card_menu_read"
+        android:icon="@android:drawable/ic_menu_view"
+        app:showAsAction="ifRoom" />
 </menu>
