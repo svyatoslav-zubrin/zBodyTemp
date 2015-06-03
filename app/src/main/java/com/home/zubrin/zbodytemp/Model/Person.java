@@ -57,12 +57,12 @@ class Person implements ZBodyTempXMLSerializedObject {
         serializer.endTag("", XML_TAG_MAIN);
     }
 
-    @Override
+    // XML Deserialization
+
     public
     Object fromXML(String xml, XmlPullParser parser) throws XmlPullParserException, IOException {
         return null;
     }
-
 
     // Public setters and getters
 

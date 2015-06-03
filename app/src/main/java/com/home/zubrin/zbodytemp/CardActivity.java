@@ -129,11 +129,11 @@ class CardActivity
             return true;
         }
         else if (id == R.id.activity_card_menu_save) {
-            XMLStorage.save();
+            XMLStorage.save(this);
             return true;
         }
         else if (id == R.id.activity_card_menu_read) {
-            String res = XMLStorage.read();
+            String res = XMLStorage.read(this);
             Log.i("XML_Read", res);
             return true;
         }

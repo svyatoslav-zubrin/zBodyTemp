@@ -1,7 +1,10 @@
 package com.home.zubrin.zbodytemp.Storage;
 
+import android.content.Context;
+
 import com.home.zubrin.zbodytemp.Model.Persons;
 import com.home.zubrin.zbodytemp.Model.xml.ZBodyTempXMLSerializer;
+import com.home.zubrin.zbodytemp.Utils.AppUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -24,19 +27,16 @@ public class XMLStorage {
     // Public methods
 
     static public
-    void save() {
+    void save(Context ctx) {
         FileOutputStream fileOutputStream;
 
         OutputStream out = null;
         try {
-            out = new BufferedOutputStream(new FileOutputStream(storageBaseFileName));
+            File filesDir = ctx.getFilesDir();
+            out = new BufferedOutputStream(new FileOutputStream(filesDir + storageBaseFileName));
             String xml = ZBodyTempXMLSerializer.serializePersons(Persons.sharedInstance);
             out.write(xml.getBytes());
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         finally {
@@ -52,9 +52,10 @@ public class XMLStorage {
     }
 
     static public
-    String read() {
+    String read(Context ctx) {
         try {
-            return getStringFromFile(storageBaseFileName);
+            File filesDir = ctx.getFilesDir();
+            return getStringFromFile(filesDir + storageBaseFileName);
         }
         catch (Exception e) {
             e.printStackTrace();

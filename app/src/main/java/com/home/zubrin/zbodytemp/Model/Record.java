@@ -106,13 +106,15 @@ public class Record implements ZBodyTempXMLSerializedObject
 
     static public
     Record fromXML(String xml, XmlPullParser parser) throws XmlPullParserException, IOException {
-        String id = parser.getAttributeValue(null, XML_ATTR_ID);
-        Type type = Type.fromString(parser.getAttributeValue(null, XML_ATTR_TYPE));
-        Date date = Date.parse(parser.getAttributeValue(null, XML_ATTR_DATE));
-        Float value = Float.parseFloat(parser.getText());
+//        String id = parser.getAttributeValue(null, XML_ATTR_ID);
+//        Type type = Type.fromString(parser.getAttributeValue(null, XML_ATTR_TYPE));
+//        Date date = Date.parse(parser.getAttributeValue(null, XML_ATTR_DATE));
+//        Float value = Float.parseFloat(parser.getText());
+//
+//        Record r = new Record(value, date);
+//        return r;
 
-        Record r = new Record(value, date);
-        return r;
+        return null;
     }
 
     // Public setters and getters

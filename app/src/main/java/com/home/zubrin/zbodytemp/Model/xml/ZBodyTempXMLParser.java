@@ -42,9 +42,7 @@ public class ZBodyTempXMLParser {
             }
 
 
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
         }
 

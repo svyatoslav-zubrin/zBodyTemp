@@ -17,6 +17,8 @@ import java.util.UUID;
  */
 public class Persons implements ZBodyTempXMLSerializedObject {
 
+    public static String XML_TAG_MAIN = "persons";
+
     public static final Persons sharedInstance = new Persons();
     // TODO: correct singleton implementation (prevent creation of multiple instances from code)...
 
@@ -48,12 +50,15 @@ public class Persons implements ZBodyTempXMLSerializedObject {
     @Override
     public
     void toXML(XmlSerializer serializer) throws IOException {
+        serializer.startTag("", XML_TAG_MAIN);
         for (Person p: mPersons) {
             p.toXML(serializer);
         }
+        serializer.endTag("", XML_TAG_MAIN);
     }
 
-    @Override
+    // XML Deserialization
+
     public
     Object fromXML(String xml, XmlPullParser parser) throws XmlPullParserException, IOException {
         return null;
