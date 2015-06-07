@@ -66,14 +66,16 @@ public class Record implements ZBodyTempXMLSerializedObject
 
     // Constructors
 
-    public Record() {
+    public
+    Record() {
         mId = UUID.randomUUID();
         mDate = new Date();
         mValue = 36.6f; // temperature, C
         mType = Type.TEMPERATURE;
     }
 
-    public Record(Float value) {
+    public
+    Record(Float value) {
         mId = UUID.randomUUID();
         mDate = new Date();
         mType = Type.TEMPERATURE;
@@ -81,7 +83,8 @@ public class Record implements ZBodyTempXMLSerializedObject
         mValue = value;
     }
 
-    public Record(Float value, Date date) {
+    public
+    Record(Float value, Date date) {
         mId = UUID.randomUUID();
         mType = Type.TEMPERATURE;
 
@@ -92,7 +95,8 @@ public class Record implements ZBodyTempXMLSerializedObject
     // XML Serialization
 
     @Override
-    public void toXML(XmlSerializer serializer) throws IOException {
+    public
+    void toXML(XmlSerializer serializer) throws IOException {
         serializer.startTag("", XML_TAG_MAIN);
         serializer.attribute("", XML_ATTR_ID, mId.toString());
         serializer.attribute("", XML_ATTR_TYPE, mType.toString());
@@ -102,44 +106,35 @@ public class Record implements ZBodyTempXMLSerializedObject
         serializer.endTag("", XML_TAG_MAIN);
     }
 
-    // XML Deserialization
-
-    static public
-    Record fromXML(String xml, XmlPullParser parser) throws XmlPullParserException, IOException {
-//        String id = parser.getAttributeValue(null, XML_ATTR_ID);
-//        Type type = Type.fromString(parser.getAttributeValue(null, XML_ATTR_TYPE));
-//        Date date = Date.parse(parser.getAttributeValue(null, XML_ATTR_DATE));
-//        Float value = Float.parseFloat(parser.getText());
-//
-//        Record r = new Record(value, date);
-//        return r;
-
-        return null;
-    }
-
     // Public setters and getters
 
-    public UUID getId() {
+    public
+    UUID getId() {
         return mId;
     }
 
-    public void setId(UUID mId) {
+    public
+    void setId(UUID mId) {
         this.mId = mId;
     }
 
-    public Float getValue() {
+    public
+    Float getValue() {
         return mValue;
     }
 
-    public void setValue(Float value) {
+    public
+    void setValue(Float value) {
         mValue = value;
     }
 
-    public Date getDate() {
+    public
+    Date getDate() {
         return mDate;
     }
 
-    public void setDate(Date date) {
+    public
+    void setDate(Date date) {
         mDate = date;
     }
 }

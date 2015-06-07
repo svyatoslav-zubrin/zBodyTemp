@@ -58,13 +58,6 @@ class Person implements ZBodyTempXMLSerializedObject {
         serializer.endTag("", XML_TAG_MAIN);
     }
 
-    // XML Deserialization
-
-    public
-    Object fromXML(String xml, XmlPullParser parser) throws XmlPullParserException, IOException {
-        return null;
-    }
-
     // Public setters and getters
 
     public
@@ -102,7 +95,8 @@ class Person implements ZBodyTempXMLSerializedObject {
         return mCard;
     }
 
-    public void setCard(Card mCard) {
+    public
+    void setCard(Card mCard) {
         this.mCard = mCard;
     }
 }

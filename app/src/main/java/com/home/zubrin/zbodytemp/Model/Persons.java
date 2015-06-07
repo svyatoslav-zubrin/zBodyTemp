@@ -28,17 +28,21 @@ public class Persons implements ZBodyTempXMLSerializedObject {
         return mPersons;
     }
 
-    public void addPerson(Person person) {
+    public
+    void addPerson(Person person) {
         mPersons.add(person);
     }
 
-    public void removePerson(Person person) {
+    public
+    void removePerson(Person person) {
         mPersons.remove(person);
     }
 
-    public void clear() { mPersons.clear(); }
+    public
+    void clear() { mPersons.clear(); }
 
-    public Person findPersonById(UUID id) {
+    public
+    Person findPersonById(UUID id) {
         for (Person p: mPersons) {
             if (p.getId().equals(id)) {
                 return p;
@@ -61,22 +65,15 @@ public class Persons implements ZBodyTempXMLSerializedObject {
         serializer.endTag("", XML_TAG_MAIN);
     }
 
-    // XML Deserialization
-
-    public
-    Object fromXML(String xml, XmlPullParser parser) throws XmlPullParserException, IOException {
-        return null;
-    }
-
     // DEBUG: custom constructor
 
     private Persons() {
         mPersons = new ArrayList<Person>();
 
-        Person adam = new Person("Adam", 33);
-        Person eve  = new Person("Eve", 22);
-
-        mPersons.add(adam);
-        mPersons.add(eve);
+//        Person adam = new Person("Adam", 33);
+//        Person eve  = new Person("Eve", 22);
+//
+//        mPersons.add(adam);
+//        mPersons.add(eve);
     }
 }

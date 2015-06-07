@@ -85,13 +85,4 @@ public class Card implements ZBodyTempXMLSerializedObject {
         serializer.endTag("", XML_TAG_DISEASE);
         serializer.endTag("", XML_TAG_MAIN);
     }
-
-    // XML Deserialization
-
-    static public
-    Object fromXML(String xml, XmlPullParser parser) throws XmlPullParserException, IOException {
-        UUID id = UUID.fromString(parser.getAttributeValue(null, XML_ATTR_ID));
-
-        return null;
-    }
 }
