@@ -48,7 +48,8 @@ class Person implements ZBodyTempXMLSerializedObject {
     // XML Serialization
 
     @Override
-    public void toXML(XmlSerializer serializer) throws IOException {
+    public
+    void toXML(XmlSerializer serializer) throws IOException {
 
         serializer.startTag("", XML_TAG_MAIN);
         serializer.attribute("", XML_ATTR_ID, mId.toString());
@@ -69,6 +70,11 @@ class Person implements ZBodyTempXMLSerializedObject {
     public
     UUID getId() {
         return mId;
+    }
+
+    public
+    void setId(UUID mId) {
+        this.mId = mId;
     }
 
     public
@@ -94,5 +100,9 @@ class Person implements ZBodyTempXMLSerializedObject {
     public
     Card getCard() {
         return mCard;
+    }
+
+    public void setCard(Card mCard) {
+        this.mCard = mCard;
     }
 }

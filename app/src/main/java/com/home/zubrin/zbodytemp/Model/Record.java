@@ -123,6 +123,10 @@ public class Record implements ZBodyTempXMLSerializedObject
         return mId;
     }
 
+    public void setId(UUID mId) {
+        this.mId = mId;
+    }
+
     public Float getValue() {
         return mValue;
     }

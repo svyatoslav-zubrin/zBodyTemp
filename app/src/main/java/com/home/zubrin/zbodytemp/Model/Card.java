@@ -41,6 +41,11 @@ public class Card implements ZBodyTempXMLSerializedObject {
     }
 
     public
+    void setId(UUID mId) {
+        this.mId = mId;
+    }
+
+    public
     ArrayList<Record> getRecords() {
         return mRecords;
     }

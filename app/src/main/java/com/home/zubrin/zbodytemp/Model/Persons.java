@@ -36,6 +36,8 @@ public class Persons implements ZBodyTempXMLSerializedObject {
         mPersons.remove(person);
     }
 
+    public void clear() { mPersons.clear(); }
+
     public Person findPersonById(UUID id) {
         for (Person p: mPersons) {
             if (p.getId().equals(id)) {
@@ -44,6 +46,8 @@ public class Persons implements ZBodyTempXMLSerializedObject {
         }
         return null;
     }
+
+
 
     // XML Serialization
 

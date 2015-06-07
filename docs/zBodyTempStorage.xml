@@ -1,3 +1,4 @@
+
 <person id="some_unique_id" name="Slava" surname="Zubrin" birthdate="143990099009900">
 	<card id="0000">
 		<disease> // stands for current desease
@@ -25,3 +26,22 @@
 		</archive>
 	</card>
 </person>
+
+
+
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<persons>
+	<person id="3d1da798-e698-4ead-87a8-a8ffa5050893" name="Adam">
+		<card id="15a526d9-8fc0-409c-add7-a7b3bfca17f8">
+			<disease>
+				<record id="94641eae-65b7-42bc-8bdc-9333d29fe0e9" type="temperature" date="Sat Jun 06 14:20:39 GMT 2015" units="C">36.6</record>
+				<record id="643f917c-33fe-4bd7-82b2-d462187d7152" type="temperature" date="Sat Jun 06 14:20:47 GMT 2015" units="C">37.0</record>
+			</disease>
+		</card>
+	</person>
+	<person id="e040113e-4300-4411-b975-cad604f4f98e" name="Eve">
+		<card id="c5d1cd53-819b-45b0-aa06-45b9caff22ef">
+			<disease />
+		</card>
+	</person>
+</persons>
