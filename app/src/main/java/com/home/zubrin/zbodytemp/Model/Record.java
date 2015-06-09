@@ -1,6 +1,7 @@
 package com.home.zubrin.zbodytemp.Model;
 
 import com.home.zubrin.zbodytemp.Interfaces.ZBodyTempXMLSerializedObject;
+import com.home.zubrin.zbodytemp.Utils.DateUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -44,7 +45,7 @@ public class Record implements ZBodyTempXMLSerializedObject
                     return NOTE;
                 case "medicine":
                     return MEDICINE;
-                case "temperatrue":
+                case "temperature":
                 default: return TEMPERATURE;
             }
         }
@@ -100,7 +101,7 @@ public class Record implements ZBodyTempXMLSerializedObject
         serializer.startTag("", XML_TAG_MAIN);
         serializer.attribute("", XML_ATTR_ID, mId.toString());
         serializer.attribute("", XML_ATTR_TYPE, mType.toString());
-        serializer.attribute("", XML_ATTR_DATE, mDate.toString()); // TODO: correct formatter needed
+        serializer.attribute("", XML_ATTR_DATE, DateUtils.date2xml(mDate));
         serializer.attribute("", XML_TAG_UNITS, "C");
         serializer.text(mValue.toString());
         serializer.endTag("", XML_TAG_MAIN);

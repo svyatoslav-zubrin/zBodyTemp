@@ -4,6 +4,7 @@ import com.home.zubrin.zbodytemp.Model.Card;
 import com.home.zubrin.zbodytemp.Model.Person;
 import com.home.zubrin.zbodytemp.Model.Persons;
 import com.home.zubrin.zbodytemp.Model.Record;
+import com.home.zubrin.zbodytemp.Utils.DateUtils;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -11,7 +12,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -31,7 +32,9 @@ public class ZBodyTempXMLParser {
     // Public methods
 
     public
-    Persons parse(String dataString) {
+    ArrayList<Person> parse(String dataString) {
+        ArrayList<Person> persons = null;
+
         XmlPullParserFactory factory;
         try {
             factory = XmlPullParserFactory.newInstance();
@@ -39,9 +42,8 @@ public class ZBodyTempXMLParser {
 
             xpp.setInput(new StringReader(dataString));
 
-            ArrayList<Person> persons;
-            Person currentPerson;
-            Card currentCard;
+            Person currentPerson = null;
+            Card currentCard = null;
             while (xpp.next() != XmlPullParser.END_TAG) {
                 int eventType = xpp.getEventType();
                 if (eventType == XmlPullParser.START_TAG) {
@@ -61,7 +63,7 @@ public class ZBodyTempXMLParser {
                     } else if (name.equals(Record.XML_TAG_MAIN)) {
                         UUID recordId = UUID.fromString(xpp.getAttributeValue(null, Record.XML_ATTR_ID));
                         Record.Type recordType = Record.Type.fromString(xpp.getAttributeValue(null, Record.XML_ATTR_TYPE));
-                        Date recordDate = new Date(); // TODO: correct parsong needed
+                        Date recordDate = DateUtils.xml2date(xpp.getAttributeValue(null, Record.XML_ATTR_DATE));
                         Float recordValue = Float.parseFloat(xpp.getText());
                         Record record = new Record();
                         record.setId(recordId);
@@ -72,7 +74,6 @@ public class ZBodyTempXMLParser {
                 } else if (eventType == XmlPullParser.END_TAG) {
                     String name = xpp.getName();
                     if (name.equals(Persons.XML_TAG_MAIN)) {
-                        // TODO: set persons to shared instance (make it possible)
                         if (persons != null && persons.size() > 0) {
                             Persons.sharedInstance.clear();
                             for (Person p: persons) {
@@ -90,13 +91,11 @@ public class ZBodyTempXMLParser {
                     }
                 }
             }
-
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
         }
 
-
-        return null;
+        return persons;
     }
 
     // Private methods
