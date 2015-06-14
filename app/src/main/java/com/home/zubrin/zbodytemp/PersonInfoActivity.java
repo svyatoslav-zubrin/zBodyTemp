@@ -21,16 +21,24 @@ import com.home.zubrin.zbodytemp.Model.Persons;
 import com.home.zubrin.zbodytemp.Storage.XMLStorage;
 import com.home.zubrin.zbodytemp.Utils.NumericUtils;
 
+import java.sql.Date;
+
 /**
  * Created by SlavaZu on 4/28/15.
  */
 public
 class PersonInfoActivity extends ActionBarActivity {
 
+    // Outlets
     private EditText mNameEditText;
     private EditText mSurnameEditText;
     private Button mBirthdayButton;
     private ImageButton mIconButton;
+    // Variables
+    private String mName;
+    private String mSurname;
+    private Date mBirthday;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
