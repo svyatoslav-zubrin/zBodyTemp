@@ -67,7 +67,7 @@ class CardActivity
 
         Intent intent = getIntent();
         UUID personId = (UUID)intent.getSerializableExtra(PersonsActivityFragment.EXTRA_SELECTED_PERSON_ID);
-        mPerson = Persons.sharedInstance.findPersonById(personId);
+        mPerson = Persons.getSharedInstance(this).findPersonById(personId);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_card);

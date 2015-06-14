@@ -1,6 +1,9 @@
 package com.home.zubrin.zbodytemp.Model;
 
+import android.content.Context;
+
 import com.home.zubrin.zbodytemp.Interfaces.ZBodyTempXMLSerializedObject;
+import com.home.zubrin.zbodytemp.Model.xml.ZBodyTempXMLParser;
 import com.home.zubrin.zbodytemp.Storage.XMLStorage;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -19,8 +22,25 @@ public class Persons implements ZBodyTempXMLSerializedObject {
 
     public static String XML_TAG_MAIN = "persons";
 
-    public static final Persons sharedInstance = new Persons();
-    // TODO: correct singleton implementation (prevent creation of multiple instances from code)...
+    private static Persons sharedInstance;
+
+    static public
+    Persons getSharedInstance(Context context) {
+        if (sharedInstance != null) return sharedInstance;
+
+        sharedInstance = new Persons();
+        String xml = XMLStorage.read(context);
+        if (xml != null) {
+            ArrayList<Person> persons = ZBodyTempXMLParser.parse(xml);
+            if (persons != null && persons.size() > 0) {
+                for (Person p : persons) {
+                    sharedInstance.addPerson(p);
+                }
+            }
+        }
+
+        return sharedInstance;
+    }
 
     private ArrayList<Person> mPersons;
 
@@ -69,11 +89,5 @@ public class Persons implements ZBodyTempXMLSerializedObject {
 
     private Persons() {
         mPersons = new ArrayList<Person>();
-
-//        Person adam = new Person("Adam", 33);
-//        Person eve  = new Person("Eve", 22);
-//
-//        mPersons.add(adam);
-//        mPersons.add(eve);
     }
 }

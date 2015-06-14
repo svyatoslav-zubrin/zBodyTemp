@@ -31,7 +31,7 @@ public class ZBodyTempXMLParser {
 
     // Public methods
 
-    public
+    static public
     ArrayList<Person> parse(String dataString) {
         ArrayList<Person> persons = null;
 
@@ -44,7 +44,8 @@ public class ZBodyTempXMLParser {
 
             Person currentPerson = null;
             Card currentCard = null;
-            while (xpp.next() != XmlPullParser.END_TAG) {
+
+            while (xpp.next() != XmlPullParser.END_DOCUMENT) {
                 int eventType = xpp.getEventType();
                 if (eventType == XmlPullParser.START_TAG) {
                     String name = xpp.getName();
@@ -64,27 +65,28 @@ public class ZBodyTempXMLParser {
                         UUID recordId = UUID.fromString(xpp.getAttributeValue(null, Record.XML_ATTR_ID));
                         Record.Type recordType = Record.Type.fromString(xpp.getAttributeValue(null, Record.XML_ATTR_TYPE));
                         Date recordDate = DateUtils.xml2date(xpp.getAttributeValue(null, Record.XML_ATTR_DATE));
-                        Float recordValue = Float.parseFloat(xpp.getText());
+                        Float recordValue = Float.parseFloat(xpp.getAttributeValue("", Record.XML_ATTR_VALUE));
                         Record record = new Record();
                         record.setId(recordId);
                         record.setDate(recordDate);
                         record.setValue(recordValue);
-                        if (currentCard != null) { currentCard.addRecord(record); }
+                        if (currentCard != null) {
+                            currentCard.addRecord(record);
+                        }
                     }
                 } else if (eventType == XmlPullParser.END_TAG) {
                     String name = xpp.getName();
                     if (name.equals(Persons.XML_TAG_MAIN)) {
-                        if (persons != null && persons.size() > 0) {
-                            Persons.sharedInstance.clear();
-                            for (Person p: persons) {
-                                Persons.sharedInstance.addPerson(p);
-                            }
-                        }
+                        // do nothing
                     } else if (name.equals(Person.XML_TAG_MAIN)) {
-                        if (persons != null && currentPerson != null) { persons.add(currentPerson); }
+                        if (persons != null && currentPerson != null) {
+                            persons.add(currentPerson);
+                        }
                         currentPerson = null;
                     } else if (name.equals(Card.XML_TAG_MAIN)) {
-                        if (currentCard != null && currentPerson != null) { currentPerson.setCard(currentCard); }
+                        if (currentCard != null && currentPerson != null) {
+                            currentPerson.setCard(currentCard);
+                        }
                         currentCard = null;
                     } else if (name.equals(Record.XML_TAG_MAIN)) {
                         // do nothing
@@ -96,22 +98,5 @@ public class ZBodyTempXMLParser {
         }
 
         return persons;
-    }
-
-    // Private methods
-
-    private
-    Person processPerson() {
-        return null;
-    }
-
-    private
-    Card processCard() {
-        return null;
-    }
-
-    private
-    Record processRecord() {
-        return null;
     }
 }

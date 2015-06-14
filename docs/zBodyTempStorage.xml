@@ -45,3 +45,45 @@
 		</card>
 	</person>
 </persons>
+
+
+ <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+ <persons>
+ 	<person id="e2f09f80-0592-4cec-9fd0-0221e199152c" name="Slava">
+ 		<card id="25290b47-fc06-4368-8f9b-ed262980cfe4">
+ 			<disease />
+ 		</card>
+ 	</person>
+ 	<person id="2e614a14-5839-49d1-bcfc-aaeb9eb7177d" name="Kateryna">
+ 		<card id="fec73686-9953-49da-93f2-cb33a0dffb24">
+ 			<disease />
+ 		</card>
+ 	</person>
+ </persons>
+
+ <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+ <persons>
+ 	<person 
+ 		id="e2f09f80-0592-4cec-9fd0-0221e199152c" 
+ 		name="Slava">
+ 		<card 
+ 			id="25290b47-fc06-4368-8f9b-ed262980cfe4">
+ 			<disease>
+ 				<record 
+ 					id="002e82ef-cf8e-4217-a889-aa96b684c1fc"
+ 					type="temperature" 
+ 					date="2015-06-14T08:03:18.579+0000" 
+ 					units="C">
+ 					36.0
+ 				</record>
+ 			</disease>
+ 		</card>
+ 	</person>
+ 	<person 
+ 		id="2e614a14-5839-49d1-bcfc-aaeb9eb7177d" 
+ 		name="Kateryna">
+ 		<card id="fec73686-9953-49da-93f2-cb33a0dffb24">
+ 			<disease />
+ 		</card>
+ 	</person>
+ </persons>

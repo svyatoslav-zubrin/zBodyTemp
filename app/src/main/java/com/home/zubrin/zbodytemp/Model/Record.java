@@ -24,6 +24,7 @@ public class Record implements ZBodyTempXMLSerializedObject
     public static String XML_TAG_AMOUNT = "amount";
     public static String XML_ATTR_TYPE  = "type";
     public static String XML_ATTR_DATE  = "date";
+    public static String XML_ATTR_VALUE = "value";
 
     public static Float MinTemp = 34.0f;
     public static Float MaxTemp = 42.0f;
@@ -103,7 +104,7 @@ public class Record implements ZBodyTempXMLSerializedObject
         serializer.attribute("", XML_ATTR_TYPE, mType.toString());
         serializer.attribute("", XML_ATTR_DATE, DateUtils.date2xml(mDate));
         serializer.attribute("", XML_TAG_UNITS, "C");
-        serializer.text(mValue.toString());
+        serializer.attribute("", XML_ATTR_VALUE, mValue.toString());
         serializer.endTag("", XML_TAG_MAIN);
     }
 

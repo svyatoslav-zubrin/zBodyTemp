@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.home.zubrin.zbodytemp.Model.Person;
 import com.home.zubrin.zbodytemp.Model.Persons;
+import com.home.zubrin.zbodytemp.Storage.XMLStorage;
 import com.home.zubrin.zbodytemp.Utils.NumericUtils;
 
 /**
@@ -118,6 +119,8 @@ class PersonInfoActivity extends ActionBarActivity {
         Integer age = getAge();
 
         Person p = new Person(name, age);
-        Persons.sharedInstance.addPerson(p);
+        Persons.getSharedInstance(this).addPerson(p);
+
+        XMLStorage.save(this);
     }
 }

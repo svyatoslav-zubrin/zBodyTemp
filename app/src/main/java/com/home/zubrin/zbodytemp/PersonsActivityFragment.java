@@ -39,7 +39,7 @@ class PersonsActivityFragment extends android.support.v4.app.ListFragment {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.persons_title);
 
-        mPersons = Persons.sharedInstance.getPersons();
+        mPersons = Persons.getSharedInstance(getActivity()).getPersons();
 
         PersonAdapter adapter = new PersonAdapter(mPersons);
         setListAdapter(adapter);

@@ -188,7 +188,7 @@ class RecordsListFragment
     private
     void fetchData() {
         UUID personId = (UUID)getArguments().getSerializable(ARG_PERSON_ID);
-        Person p = Persons.sharedInstance.findPersonById(personId);
+        Person p = Persons.getSharedInstance(getActivity()).findPersonById(personId);
         if (p != null) {
             mRecords = p.getCard().getRecords();
         }

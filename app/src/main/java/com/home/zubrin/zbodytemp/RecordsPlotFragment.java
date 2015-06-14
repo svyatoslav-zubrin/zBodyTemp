@@ -101,7 +101,7 @@ public class RecordsPlotFragment
     // Data management
 
     private void fetchTemperatures() {
-        Person p = Persons.sharedInstance.findPersonById(mPersonId);
+        Person p = Persons.getSharedInstance(getActivity()).findPersonById(mPersonId);
         if (p != null) {
             ArrayList<Record> records = p.getCard().getRecords();
             mTemperatures.clear();
