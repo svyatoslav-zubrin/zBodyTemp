@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,10 +17,25 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
+        android:inputType="textPersonName"
         android:ems="10"
-        android:hint="@string/activity_person_info_hint_age"
-        android:id="@+id/person_info_ageEditText"
-        />
+        android:hint="@string/activity_person_info_hint_surname"
+        android:id="@+id/person_info_surnameEditText"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_person_info_hint_birthday"
+        android:id="@+id/person_info_birthdayButton"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/person_info_iconButton"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/sick_male"
+        android:background="@drawable/activity_person_info_icon"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

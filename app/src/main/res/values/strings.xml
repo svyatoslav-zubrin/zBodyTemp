@@ -11,7 +11,8 @@
     <string name="activity_person_info_title">Person info</string>
     <string name="activity_person_info_menu_save">Save person</string>
     <string name="activity_person_info_hint_name">Name</string>
-    <string name="activity_person_info_hint_age">Age</string>
+    <string name="activity_person_info_hint_surname">Surname</string>
+    <string name="activity_person_info_hint_birthday">Birthday</string>
 
     <!--Card screen-->
     <string name="activity_card_title">History</string>

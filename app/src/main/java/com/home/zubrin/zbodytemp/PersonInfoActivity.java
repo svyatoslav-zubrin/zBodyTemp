@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.home.zubrin.zbodytemp.Model.Person;
@@ -26,7 +28,9 @@ public
 class PersonInfoActivity extends ActionBarActivity {
 
     private EditText mNameEditText;
-    private EditText mAgeEditText;
+    private EditText mSurnameEditText;
+    private Button mBirthdayButton;
+    private ImageButton mIconButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +47,14 @@ class PersonInfoActivity extends ActionBarActivity {
             if (mNameEditText == null) {
                 mNameEditText = (EditText) v.findViewById(R.id.person_info_nameEditText);
             }
-            if (mAgeEditText == null) {
-                mAgeEditText = (EditText) v.findViewById(R.id.person_info_ageEditText);
+            if (mSurnameEditText == null) {
+                mSurnameEditText = (EditText) v.findViewById(R.id.person_info_surnameEditText);
+            }
+            if (mBirthdayButton == null) {
+                mBirthdayButton = (Button) v.findViewById(R.id.person_info_birthdayButton);
+            }
+            if (mIconButton == null) {
+                mIconButton = (ImageButton) v.findViewById(R.id.person_info_iconButton);
             }
         }
 
@@ -93,14 +103,14 @@ class PersonInfoActivity extends ActionBarActivity {
         String name = getName();
         Boolean isNameValid = name != null && name.length() > 0;
         // Age
-        Boolean isAgeValid = false;
-        String ageString = mAgeEditText.getText().toString();
-        if (NumericUtils.isInteger(ageString)) {
-            Integer age = getAge();
-            isAgeValid = age != null && age > 0 && age < 150;
-        }
+//        Boolean isAgeValid = false;
+//        String ageString = mAgeEditText.getText().toString();
+//        if (NumericUtils.isInteger(ageString)) {
+//            Integer age = getAge();
+//            isAgeValid = age != null && age > 0 && age < 150;
+//        }
 
-        return isNameValid && isAgeValid;
+        return isNameValid;// && isAgeValid;
     }
 
     private
@@ -108,17 +118,17 @@ class PersonInfoActivity extends ActionBarActivity {
         return mNameEditText.getText().toString();
     }
 
-    private
-    Integer getAge() {
-        return Integer.parseInt(mAgeEditText.getText().toString());
-    }
+//    private
+//    Integer getAge() {
+//        return Integer.parseInt(mAgeEditText.getText().toString());
+//    }
 
     private
     void createNewPerson() {
         String name = getName();
-        Integer age = getAge();
+//        Integer age = getAge();
 
-        Person p = new Person(name, age);
+        Person p = new Person(name, 0);
         Persons.getSharedInstance(this).addPerson(p);
 
         XMLStorage.save(this);
