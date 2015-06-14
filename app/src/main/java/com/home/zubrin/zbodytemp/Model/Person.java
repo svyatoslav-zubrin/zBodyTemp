@@ -1,14 +1,12 @@
 package com.home.zubrin.zbodytemp.Model;
 
 import com.home.zubrin.zbodytemp.Interfaces.ZBodyTempXMLSerializedObject;
+import com.home.zubrin.zbodytemp.Utils.DateUtils;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
-import java.io.IOError;
 import java.io.IOException;
-import java.io.StringWriter;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -25,18 +23,30 @@ class Person implements ZBodyTempXMLSerializedObject {
 
     private UUID mId;
     private String mName;
-    private Integer mAge;
+    private String mSurname;
+    private Date mBirthday;
     private Card mCard;
 
     // Constructors
 
     public
-    Person(String name, Integer age) {
+    Person(String name, Date birthday) {
         mId = UUID.randomUUID();
         mCard = new Card();
 
         mName = name;
-        mAge = age;
+        mSurname = "";
+        mBirthday = birthday;
+    }
+
+    public
+    Person(String name, String surname, Date birthday) {
+        mId = UUID.randomUUID();
+        mCard = new Card();
+
+        mName = name;
+        mSurname = surname;
+        mBirthday = birthday;
     }
 
     @Override
@@ -54,6 +64,8 @@ class Person implements ZBodyTempXMLSerializedObject {
         serializer.startTag("", XML_TAG_MAIN);
         serializer.attribute("", XML_ATTR_ID, mId.toString());
         serializer.attribute("", XML_ATTR_NAME, mName);
+        serializer.attribute("", XML_ATTR_SURNAME, mSurname);
+        serializer.attribute("", XML_ATTR_BIRTHDATE, DateUtils.date2xml(mBirthday));
         mCard.toXML(serializer);
         serializer.endTag("", XML_TAG_MAIN);
     }
@@ -80,14 +92,20 @@ class Person implements ZBodyTempXMLSerializedObject {
         mName = name;
     }
 
-    public
-    Integer getAge() {
-        return mAge;
+    public String getSurname() {
+        return mSurname;
     }
 
-    public
-    void setAge(Integer age) {
-        mAge = age;
+    public void setSurname(String surname) {
+        mSurname = surname;
+    }
+
+    public Date getBirthday() {
+        return mBirthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        mBirthday = birthday;
     }
 
     public

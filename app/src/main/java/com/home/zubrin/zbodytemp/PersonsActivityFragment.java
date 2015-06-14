@@ -87,9 +87,9 @@ class PersonsActivityFragment extends android.support.v4.app.ListFragment {
                     (TextView)convertView.findViewById(R.id.crime_list_item_header);
             titleTextView.setText(p.getName());
 
-            TextView dateTextView =
-                    (TextView)convertView.findViewById(R.id.crime_list_item_subheader);
-            dateTextView.setText(p.getAge().toString() + " years old");
+//            TextView dateTextView =
+//                    (TextView)convertView.findViewById(R.id.crime_list_item_subheader);
+//            dateTextView.setText(p.getAge().toString() + " years old");
 
             return convertView;
         }

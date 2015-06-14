@@ -12,7 +12,7 @@
         android:ems="10"
         android:hint="@string/activity_person_info_hint_name"
         android:id="@+id/person_info_nameEditText"
-        />
+        android:layout_gravity="center_horizontal"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -27,7 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/activity_person_info_hint_birthday"
-        android:id="@+id/person_info_birthdayButton"/>
+        android:id="@+id/person_info_birthdayButton"
+        android:layout_gravity="center_horizontal"/>
 
     <ImageButton
         android:layout_width="wrap_content"

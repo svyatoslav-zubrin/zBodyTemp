@@ -3,11 +3,11 @@ package com.home.zubrin.zbodytemp;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.home.zubrin.zbodytemp.Model.Person;
 import com.home.zubrin.zbodytemp.Model.Persons;
 import com.home.zubrin.zbodytemp.Storage.XMLStorage;
-import com.home.zubrin.zbodytemp.Utils.NumericUtils;
 
 import java.sql.Date;
 
@@ -28,6 +27,8 @@ import java.sql.Date;
  */
 public
 class PersonInfoActivity extends ActionBarActivity {
+
+    public static final String DIALOG_DATE_TAG = "zBodyTemp.tag.dialog_date_tag";
 
     // Outlets
     private EditText mNameEditText;
@@ -60,6 +61,12 @@ class PersonInfoActivity extends ActionBarActivity {
             }
             if (mBirthdayButton == null) {
                 mBirthdayButton = (Button) v.findViewById(R.id.person_info_birthdayButton);
+                mBirthdayButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBirthdayButtonPressed();
+                    }
+                });
             }
             if (mIconButton == null) {
                 mIconButton = (ImageButton) v.findViewById(R.id.person_info_iconButton);
@@ -103,6 +110,15 @@ class PersonInfoActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Dialogs management
+
+    private
+    void onBirthdayButtonPressed() {
+        FragmentManager fm = getSupportFragmentManager();
+        DatePopupFragment f = DatePopupFragment.newInstance(mBirthday);
+        f.show(fm, DIALOG_DATE_TAG);
+    }
+
     // Private
 
     private
@@ -110,15 +126,15 @@ class PersonInfoActivity extends ActionBarActivity {
         // Name
         String name = getName();
         Boolean isNameValid = name != null && name.length() > 0;
-        // Age
-//        Boolean isAgeValid = false;
-//        String ageString = mAgeEditText.getText().toString();
-//        if (NumericUtils.isInteger(ageString)) {
-//            Integer age = getAge();
-//            isAgeValid = age != null && age > 0 && age < 150;
-//        }
 
-        return isNameValid;// && isAgeValid;
+        // Name
+        String surname = getSurname();
+        Boolean isSurnameValid = surname != null && surname.length() > 0;
+
+        // Birthday
+        Boolean isBirthdayValid = mBirthday != null;
+
+        return isNameValid && isSurnameValid && isBirthdayValid;
     }
 
     private
@@ -126,17 +142,17 @@ class PersonInfoActivity extends ActionBarActivity {
         return mNameEditText.getText().toString();
     }
 
-//    private
-//    Integer getAge() {
-//        return Integer.parseInt(mAgeEditText.getText().toString());
-//    }
+    private
+    String getSurname() {
+        return mSurnameEditText.getText().toString();
+    }
 
     private
     void createNewPerson() {
         String name = getName();
-//        Integer age = getAge();
+        String surname = getSurname();
 
-        Person p = new Person(name, 0);
+        Person p = new Person(name, surname, mBirthday);
         Persons.getSharedInstance(this).addPerson(p);
 
         XMLStorage.save(this);

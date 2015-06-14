@@ -52,10 +52,11 @@ public class ZBodyTempXMLParser {
                     if (name.equals(Persons.XML_TAG_MAIN)) {
                         persons = new ArrayList<>();
                     } else if (name.equals(Person.XML_TAG_MAIN)) {
-                        String personName = xpp.getAttributeValue(null, Person.XML_ATTR_NAME);
                         String personId = xpp.getAttributeValue(null, Person.XML_ATTR_ID);
-                        int personAge = 0;
-                        currentPerson = new Person(personName, personAge);
+                        String personName = xpp.getAttributeValue(null, Person.XML_ATTR_NAME);
+                        String personSurname = xpp.getAttributeValue(null, Person.XML_ATTR_SURNAME);
+                        Date birthday = DateUtils.xml2date(xpp.getAttributeValue(null, Person.XML_ATTR_BIRTHDATE));
+                        currentPerson = new Person(personName, personSurname, birthday);
                         currentPerson.setId(UUID.fromString(personId));
                     } else if (name.equals(Card.XML_TAG_MAIN)) {
                         String cardId = xpp.getAttributeValue(null, Card.XML_ATTR_ID);
